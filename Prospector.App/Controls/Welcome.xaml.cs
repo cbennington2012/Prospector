@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using Prospector.App.Controls.HoldingControls;
 
 namespace Prospector.App.Controls
 {

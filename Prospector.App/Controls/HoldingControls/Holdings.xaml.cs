@@ -1,15 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows.Controls;
-using Prospector.Domain.Contracts.Providers;
 using Prospector.Presentation.Contracts;
 
-namespace Prospector.App.Controls
+namespace Prospector.App.Controls.HoldingControls
 {
     public partial class Holdings : UserControl
     {
         private readonly IHoldingViewModelBuilder _holdingViewModelBuilder;
 
-        public Holdings(IHoldingViewModelBuilder holdingViewModelBuilder, IHoldingDataProvider holdingDataProvider)
+        public Holdings(IHoldingViewModelBuilder holdingViewModelBuilder)
         {
             _holdingViewModelBuilder = holdingViewModelBuilder;
 
@@ -22,6 +22,11 @@ namespace Prospector.App.Controls
             var holdingViewModels = App.Holdings.Select(item => _holdingViewModelBuilder.BuildViewModel(item)).ToList();
 
             ResultsGrid.DataContext = holdingViewModels;
+        }
+
+        public void AddHoldingsButton_OnClick(Object sender, EventArgs e)
+        {
+            base.Content = App.Container.GetInstance<AddHoldings>();
         }
     }
 }

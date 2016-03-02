@@ -97,7 +97,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Holdings.xaml">
+    <Page Include="Controls\HoldingControls\AddHoldings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HoldingControls\Holdings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,11 +122,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Controls\BaseUserControl.cs" />
     <Compile Include="Controls\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Holdings.xaml.cs">
+    <Compile Include="Controls\HoldingControls\AddHoldings.xaml.cs">
+      <DependentUpon>AddHoldings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HoldingControls\Holdings.xaml.cs">
       <DependentUpon>Holdings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Transactions.xaml.cs">
