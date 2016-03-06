@@ -58,7 +58,11 @@
   <ItemGroup>
     <Compile Include="Domain\Engines\CalculatorEngineSpecs\CalculatorEngineTests.cs" />
     <Compile Include="Domain\Entities\HoldingDataSpecs\HoldingDataTests.cs" />
+    <Compile Include="Domain\Providers\HoldingDataProviderSpecs\HoldingDataProviderTests.cs" />
+    <Compile Include="Domain\Providers\JsonProviderSpecs\JsonProviderTests.cs" />
     <Compile Include="GivenA.cs" />
+    <Compile Include="Presentation\ViewModelBuilders\HoldingViewModelBuilderSpecs\HoldingViewModelBuilderTests.cs" />
+    <Compile Include="Presentation\ViewModels\HoldingViewModelSpecs\HoldingViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
   </ItemGroup>
@@ -69,6 +73,10 @@
     <ProjectReference Include="..\Prospector.Domain\Prospector.Domain.csproj">
       <Project>{D1D23BF4-CF98-4A6C-BA08-9349CB65B9E3}</Project>
       <Name>Prospector.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prospector.Presentation\Prospector.Presentation.csproj">
+      <Project>{517D1084-3A11-4B32-BEF1-5194AE56D9F8}</Project>
+      <Name>Prospector.Presentation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
