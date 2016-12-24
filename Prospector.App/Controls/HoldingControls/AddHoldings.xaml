@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             
             <Label Grid.Row="0" Grid.Column="0">Code:</Label>
@@ -29,6 +30,7 @@
             <Label Grid.Row="4" Grid.Column="0">Commission:</Label>
             <Label Grid.Row="5" Grid.Column="0">Tax:</Label>
             <Label Grid.Row="6" Grid.Column="0">Levy:</Label>
+            <Label Grid.Row="7" Grid.Column="0">Percentage:</Label>
             
             <TextBox Width="100" Grid.Row="0" Grid.Column="1" Name="CodeTextBox"></TextBox>
             <TextBox Width="100" Grid.Row="1" Grid.Column="1" Name="DateTextBox"></TextBox>
@@ -37,8 +39,9 @@
             <TextBox Width="100" Grid.Row="4" Grid.Column="1" Name="CommissionTextBox"></TextBox>
             <TextBox Width="100" Grid.Row="5" Grid.Column="1" Name="TaxTextBox"></TextBox>
             <TextBox Width="100" Grid.Row="6" Grid.Column="1" Name="LevyTextBox"></TextBox>
+            <TextBox Width="100" Grid.Row="7" Grid.Column="1" Name="PercentageTextBox">2</TextBox>
             
-            <Button Grid.Row="7" Grid.Column="1" Name="SaveButton" Click="SaveButton_OnClick">Save</Button>
+            <Button Grid.Row="8" Grid.Column="1" Name="SaveButton" Click="SaveButton_OnClick">Save</Button>
         </Grid>
         
     </StackPanel>

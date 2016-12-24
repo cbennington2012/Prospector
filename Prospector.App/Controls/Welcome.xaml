@@ -7,11 +7,12 @@
              mc:Ignorable="d">
     <StackPanel>
         <StackPanel Name="NavigationContainer" Orientation="Horizontal">
-            <Button Name="CalculatorButton" Click="CalculatorButton_OnClick">Calculator</Button>
-            <Button Name="HoldingsButton" Click="HoldingsButton_OnClick">Holdings</Button>
-            <Button Name="TransactionsButton" Click="TransactionsButton_OnClick">Transactions</Button>
+            <Button Name="CalculatorButton" Click="CalculatorButton_OnClick" Style="{StaticResource DefaultButton}">Calculator</Button>
+            <Button Name="HoldingsButton" Click="HoldingsButton_OnClick" Style="{StaticResource DefaultButton}">Holdings</Button>
+            <Button Name="TransactionsButton" Click="TransactionsButton_OnClick" Style="{StaticResource DefaultButton}">Transactions</Button>
+            <Button Name="DashboardButton" Click="DashboardButton_OnClick" Style="{StaticResource DefaultButton}">Dashboard</Button>
         </StackPanel>
-        <Separator Foreground="White" Width="Auto" ></Separator>
+        <Separator Foreground="Black" Width="Auto" ></Separator>
         <Grid Width="Auto" Height="Auto" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>

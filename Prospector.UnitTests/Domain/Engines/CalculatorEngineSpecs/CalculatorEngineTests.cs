@@ -10,13 +10,13 @@ namespace Prospector.UnitTests.Domain.Engines.CalculatorEngineSpecs
         {
             base.When();
 
-            Result = Target.CalculateCost(1000, 100, 5.95M, 25);
+            Result = Target.CalculateCost(1000, 100, 5.95M, 25, 1);
         }
 
         [Then]
         public void TheResultIsCorrect()
         {
-            Assert.That(Result, Is.EqualTo(1030.95));
+            Assert.That(Result, Is.EqualTo(1031.95));
         }
     }
 
@@ -26,13 +26,13 @@ namespace Prospector.UnitTests.Domain.Engines.CalculatorEngineSpecs
         {
             base.When();
 
-            Result = Target.CalculateBreakEvenPrice(1000, 100, 5.95M, 25);
+            Result = Target.CalculateBreakEvenPrice(1000, 100, 5.95M, 25, 1);
         }
 
         [Then]
         public void TheResultIsCorrect()
         {
-            Assert.That(Result, Is.EqualTo(103.1));
+            Assert.That(Result, Is.EqualTo(103.89));
         }
     }
 
@@ -42,13 +42,13 @@ namespace Prospector.UnitTests.Domain.Engines.CalculatorEngineSpecs
         {
             base.When();
 
-            Result = Target.CalculateProfitPrice(1000, 100, 5.95M, 25, 1.1M);
+            Result = Target.CalculateProfitPrice(1000, 100, 5.95M, 25, 1, 1.1M);
         }
 
         [Then]
         public void TheResultIsCorrect()
         {
-            Assert.That(Result, Is.EqualTo(113.1));
+            Assert.That(Result, Is.EqualTo(113.89));
         }
     }
 
@@ -58,13 +58,13 @@ namespace Prospector.UnitTests.Domain.Engines.CalculatorEngineSpecs
         {
             base.When();
 
-            Result = Target.CalculateEarnings(1000, 113, 5.95M, 1030);
+            Result = Target.CalculateEarnings(1000, 113, 5.95M, 1030, 1);
         }
 
         [Then]
         public void TheResultIsCorrect()
         {
-            Assert.That(Result, Is.EqualTo(94.05));
+            Assert.That(Result, Is.EqualTo(93.05));
         }
     }
 }

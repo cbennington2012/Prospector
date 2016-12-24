@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
     <StackPanel>
-        <Label FontSize="18" FontWeight="Bold">Holdings</Label>
+        <Label Style="{StaticResource HeadingOne}">Holdings</Label>
         <StackPanel Orientation="Horizontal">
             <Label FontWeight="Bold">NOTE:</Label>
-            <Label>'Profit Price' and 'Earnings' is based on a default 2.5% increase</Label>
+            <Label>'Profit Price' and 'Earnings' is based on a default 2% increase unless specified</Label>
         </StackPanel>
         <DataGrid Name="ResultsGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" ItemsSource="{Binding}">
             <DataGrid.Columns>
@@ -21,12 +21,21 @@
                 <DataGridTextColumn Header="Levy" Binding="{Binding Levy}" Width="75"></DataGridTextColumn>
                 <DataGridTextColumn Header="Cost" Binding="{Binding Cost}" Width="75"></DataGridTextColumn>
                 <DataGridTextColumn Header="Break Even Price" Binding="{Binding BreakEvenPrice}" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Header="Profit Price" Binding="{Binding ProfitPrice}"  Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Header="Percentage" Binding="{Binding Percentage}" Width="75"></DataGridTextColumn>
+                <DataGridTextColumn Header="Profit Price" Binding="{Binding ProfitPrice}"  Width="75"></DataGridTextColumn>
                 <DataGridTextColumn Header="Earnings" Binding="{Binding Earnings}" Width="75"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="75">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Tag="{Binding Id}" Content="Delete" Click="DeleteHoldingsButton_OnClick"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
-            <Button Name="AddHoldingsButton" Click="AddHoldingsButton_OnClick">Add</Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="CalculatorButton" Click="CalculatorButton_OnClick" Style="{StaticResource DefaultButton}">Calculator</Button>
+            <Button Name="AddHoldingsButton" Click="AddHoldingsButton_OnClick" Style="{StaticResource DefaultButton}">Add</Button>
         </StackPanel>
     </StackPanel>
 </UserControl>

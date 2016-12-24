@@ -25,5 +25,10 @@ namespace Prospector.App.Controls
         {
             Container.Content = App.Container.GetInstance<Transactions>();
         }
+
+        public void DashboardButton_OnClick(Object sender, EventArgs e)
+        {
+            Container.Content = App.Container.GetInstance<Dashboard>();
+        }
     }
 }

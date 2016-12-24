@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Engines;
 using Prospector.Domain.Entities;
@@ -22,7 +16,9 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
             Shares = 1000,
             Price = 100,
             Commission = 10,
-            Tax = 1
+            Tax = 1,
+            Levy = 1,
+            Percentage = 5
         };
 
         protected override void Given()
@@ -34,19 +30,19 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
                 .Returns(_mockHoldingViewModel);
 
             GetMock<ICalculatorEngine>()
-                .Setup(m => m.CalculateCost(1000, 100, 10, 1))
+                .Setup(m => m.CalculateCost(1000, 100, 10, 1, 1))
                 .Returns(2000);
 
             GetMock<ICalculatorEngine>()
-                .Setup(m => m.CalculateBreakEvenPrice(1000, 100, 10, 1))
+                .Setup(m => m.CalculateBreakEvenPrice(1000, 100, 10, 1, 1))
                 .Returns(200);
 
             GetMock<ICalculatorEngine>()
-                .Setup(m => m.CalculateProfitPrice(1000, 100, 10, 1, 1.025M))
+                .Setup(m => m.CalculateProfitPrice(1000, 100, 10, 1, 1, 1.05M))
                 .Returns(300);
 
             GetMock<ICalculatorEngine>()
-                .Setup(m => m.CalculateEarnings(1000, 300, 10, 2000))
+                .Setup(m => m.CalculateEarnings(1000, 300, 10, 2000, 1))
                 .Returns(4000);
         }
 
@@ -66,7 +62,7 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         [Then]
         public void TheCalculatorEngineCalculatesTheCost()
         {
-            Verify<ICalculatorEngine>(m => m.CalculateCost(1000, 100, 10, 1));
+            Verify<ICalculatorEngine>(m => m.CalculateCost(1000, 100, 10, 1, 1));
         }
 
         [Then]
@@ -78,7 +74,7 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         [Then]
         public void TheCalculatorEngineCalculatesTheBreakEvenPrice()
         {
-            Verify<ICalculatorEngine>(m => m.CalculateBreakEvenPrice(1000, 100, 10, 1));
+            Verify<ICalculatorEngine>(m => m.CalculateBreakEvenPrice(1000, 100, 10, 1, 1));
         }
 
         [Then]
@@ -90,7 +86,7 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         [Then]
         public void TheCalculatorEngineCalculatesTheProfitPrice()
         {
-            Verify<ICalculatorEngine>(m => m.CalculateProfitPrice(1000, 100, 10, 1, 1.025M));
+            Verify<ICalculatorEngine>(m => m.CalculateProfitPrice(1000, 100, 10, 1, 1, 1.05M));
         }
 
         [Then]
@@ -102,7 +98,7 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         [Then]
         public void TheCalculatorEngineCalculatesTheEarnings()
         {
-            Verify<ICalculatorEngine>(m => m.CalculateEarnings(1000, 300, 10, 2000));
+            Verify<ICalculatorEngine>(m => m.CalculateEarnings(1000, 300, 10, 2000, 1));
         }
 
         [Then]

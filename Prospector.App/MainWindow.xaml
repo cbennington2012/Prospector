@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Prospector.App.Controls"
         mc:Ignorable="d"
-        Title="Prospector" Height="500"  Width="1024">
+        Title="Prospector" Height="500"  Width="1055">
     <local:Welcome Height="Auto" Width="Auto"></local:Welcome>
 </Window>

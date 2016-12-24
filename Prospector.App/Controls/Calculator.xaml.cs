@@ -25,16 +25,16 @@ namespace Prospector.App.Controls
             var levy = Decimal.Parse(LevyTextBox.Text);
             var profitPercentage = 1 + Decimal.Parse(ProfitPercentageTextBox.Text) / 100;
 
-            var shares = Math.Floor(((investment - commission - tax) * 100) / price);
-            var cost = _calculatorEngine.CalculateCost(shares, price, commission, tax);
-            var breakEvenPrice = _calculatorEngine.CalculateBreakEvenPrice(shares, price, commission, tax);
-            var profitPrice = _calculatorEngine.CalculateProfitPrice(shares, price, commission, tax, profitPercentage);
-            var earnings = _calculatorEngine.CalculateEarnings(shares, profitPrice, commission, cost);
+            var shares = Math.Floor(((investment - commission - tax - levy) * 100) / price);
+            var cost = _calculatorEngine.CalculateCost(shares, price, commission, tax, levy);
+            var breakEvenPrice = _calculatorEngine.CalculateBreakEvenPrice(shares, price, commission, tax, levy);
+            var profitPrice = _calculatorEngine.CalculateProfitPrice(shares, price, commission, tax, levy, profitPercentage);
+            var earnings = _calculatorEngine.CalculateEarnings(shares, profitPrice, commission, cost, levy);
 
             SharesLabel.Content = shares;
             CostLabel.Content = cost;
             BreakEvenLabel.Content = breakEvenPrice;
-            ProfitPriceLabel.Content = profitPrice;
+            ProfitPriceLabel.Content = $"{profitPrice} ({profitPrice - price})";
             EarningsLabel.Content = earnings;
         }
     }

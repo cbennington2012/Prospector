@@ -6,20 +6,30 @@ namespace Prospector.UnitTests.Domain.Entities.HoldingDataSpecs
 {
     public class WhenIGetTheCode : TestBase<HoldingData>
     {
+        private readonly Guid _id = Guid.NewGuid();
+
         protected override void When()
         {
             base.When();
 
             Target = new HoldingData
             {
+                Id = _id,
                 Code = "TST",
                 Date = DateTime.UtcNow,
                 Shares = 10000,
                 Price = 1000.5M,
                 Tax = 100.5M,
                 Commission = 10.5M,
-                Levy = 1.5M
+                Levy = 1.5M,
+                Percentage = 2.5M
             };
+        }
+
+        [Then]
+        public void TheIdPropertyIsCorrect()
+        {
+            Assert.That(Target.Id, Is.EqualTo(_id));
         }
 
         [Then]
@@ -62,6 +72,12 @@ namespace Prospector.UnitTests.Domain.Entities.HoldingDataSpecs
         public void TheLevyPropertyIsCorrect()
         {
             Assert.That(Target.Levy, Is.EqualTo(1.5M));
+        }
+
+        [Then]
+        public void ThePercentagePropertyIsCorrect()
+        {
+            Assert.That(Target.Percentage, Is.EqualTo(2.5M));
         }
     }
 }

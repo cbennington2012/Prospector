@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Prospector.App.Controls.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Prospector.App.Controls"
+      mc:Ignorable="d">
+    <StackPanel Orientation="Vertical">
+        <Label Style="{StaticResource HeadingOne}">Dashboard</Label>
+        <DataGrid Name="HoldingsGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False" IsReadOnly="True" ItemsSource="{Binding}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Code"></DataGridTextColumn>
+                <DataGridTextColumn Header="Shares"></DataGridTextColumn>
+                <DataGridTextColumn Header="Price"></DataGridTextColumn>
+                <DataGridTextColumn Header="Cost"></DataGridTextColumn>
+                <DataGridTextColumn Header="Percentage"></DataGridTextColumn>
+                <DataGridTextColumn Header="Current Price"></DataGridTextColumn>
+                <DataGridTextColumn Header="Earnings"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>

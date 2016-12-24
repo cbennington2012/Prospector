@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Prospector.App.Controls"
              mc:Ignorable="d" >
     <StackPanel Orientation="Vertical">
-        <Label FontSize="18" FontWeight="Bold">Calculator</Label>
+        <Label Style="{StaticResource HeadingOne}">Calculator</Label>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -39,7 +39,7 @@
             <TextBox Grid.Row="2" Grid.Column="1" Name="TaxTextBox"></TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Name="CommissionTextBox">5.95</TextBox>
             <TextBox Grid.Row="4" Grid.Column="1" Name="LevyTextBox">0</TextBox>
-            <TextBox Grid.Row="5" Grid.Column="1" Name="ProfitPercentageTextBox">5</TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Name="ProfitPercentageTextBox">2</TextBox>
             <Button Grid.Row="6" Grid.Column="1" Name="CalculateButton" Click="CalculateButton_OnClick">Calculate</Button>
 
             <Separator Grid.Row="7" Grid.ColumnSpan="2"></Separator>
