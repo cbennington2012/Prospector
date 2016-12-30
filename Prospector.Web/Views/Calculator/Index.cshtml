@@ -1,0 +1,127 @@
+﻿@using Prospector.Presentation.ViewModels
+@model CalculatorViewModel
+
+@{
+    ViewBag.Title = "Calculator";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Calculator</h3>
+<div class="notification">
+    @ViewBag.Message
+</div>
+<form action="/Calculator/Index" method="POST">
+    <div class="form-horizontal">
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Investment)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Investment)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Investment)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Price)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Tax)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Tax)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Tax)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Commission)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Commission)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Commission)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Levy)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Levy)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Levy)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Profit)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Profit)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Profit)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn-primary" type="submit">Calculate</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Cost)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Cost, new {htmlAttributes = new {@disabled = "disabled"}})
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Shares)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Shares, new {htmlAttributes = new {@disabled = "disabled"}})
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.BreakEvenPrice)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.BreakEvenPrice, new {htmlAttributes = new {@disabled = "disabled"}})
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.ProfitPrice)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.ProfitPrice, new {htmlAttributes = new {@disabled = "disabled"}})
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Earnings)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Earnings, new { htmlAttributes = new { @disabled = "disabled" } })
+            </div>
+        </div>
+    </div>
+</form>

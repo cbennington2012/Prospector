@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Engines;
+using Prospector.Domain.Contracts.Repositories;
 using Prospector.Domain.Entities;
 using Prospector.Presentation.Contracts;
 using Prospector.Presentation.ViewModels;
@@ -11,11 +13,13 @@ namespace Prospector.Presentation.ViewModelBuilders
     {
         private readonly IAutoMapper _autoMapper;
         private readonly ICalculatorEngine _calculatorEngine;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public HoldingViewModelBuilder(IAutoMapper autoMapper, ICalculatorEngine calculatorEngine)
+        public HoldingViewModelBuilder(IAutoMapper autoMapper, ICalculatorEngine calculatorEngine, ITransactionRepository transactionRepository)
         {
             _autoMapper = autoMapper;
             _calculatorEngine = calculatorEngine;
+            _transactionRepository = transactionRepository;
         }
 
         public HoldingViewModel BuildViewModel(HoldingData data)
@@ -32,6 +36,30 @@ namespace Prospector.Presentation.ViewModelBuilders
             viewModel.Earnings = _calculatorEngine.CalculateEarnings(viewModel.Shares, profitPrice, viewModel.Commission, cost, viewModel.Levy);
 
             return viewModel;
+        }
+
+        public IList<HoldingViewModel> BuildViewModels()
+        {
+            var data = _transactionRepository.GetCurrentHoldings();
+
+            var viewModels = new List<HoldingViewModel>();
+
+            foreach (var item in data)
+            {
+                var viewModel = _autoMapper.Map<TransactionData, HoldingViewModel>(item);
+                var profitPercentage = _calculatorEngine.CalculatePercentage(item.Percentage);
+                var cost = _calculatorEngine.CalculateCost(item.Shares, item.Price, item.Commission, item.Tax, item.Levy);
+                var profitPrice = _calculatorEngine.CalculateProfitPrice(item.Shares, item.Price, item.Commission, item.Tax, item.Levy, profitPercentage);
+
+                viewModel.Cost = cost;
+                viewModel.BreakEvenPrice = _calculatorEngine.CalculateBreakEvenPrice(item.Shares, item.Price, item.Commission, item.Tax, item.Levy);
+                viewModel.ProfitPrice = profitPrice;
+                viewModel.Earnings = _calculatorEngine.CalculateEarnings(item.Shares, profitPrice, item.Commission, cost, item.Levy);
+
+                viewModels.Add(viewModel);
+            }
+
+            return viewModels;
         }
     }
 }

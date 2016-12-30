@@ -5,6 +5,16 @@ namespace Prospector.Domain.Engines
 {
     public class CalculatorEngine : ICalculatorEngine
     {
+        public decimal CalculatePercentage(Decimal profitPercentage)
+        {
+            return 1.0M + (profitPercentage/100.0M);
+        }
+
+        public int CalculateShares(Decimal investment, Decimal commission, Decimal tax, Decimal levy, Decimal price)
+        {
+            return (int)Math.Floor(((investment - commission - tax - levy)*100)/price);
+        }
+
         public Decimal CalculateCost(Decimal shares, Decimal price, Decimal commission, Decimal tax, Decimal levy)
         {
             return Math.Round(((shares * price) / 100) + commission + tax + levy, 2);

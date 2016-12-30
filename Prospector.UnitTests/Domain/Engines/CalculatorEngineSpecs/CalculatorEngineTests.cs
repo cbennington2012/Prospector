@@ -4,6 +4,38 @@ using Prospector.Domain.Engines;
 
 namespace Prospector.UnitTests.Domain.Engines.CalculatorEngineSpecs
 {
+    public class WhenICalculateThePercentage : GivenA<CalculatorEngine, Decimal>
+    {
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.CalculatePercentage(2.5M);
+        }
+
+        [Then]
+        public void TheResultIsCorrect()
+        {
+            Assert.That(Result, Is.EqualTo(1.025));
+        }
+    }
+
+    public class WhenICalculateTheShares : GivenA<CalculatorEngine, int>
+    {
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.CalculateShares(10000, 5.95M, 50, 1, 249.75M);
+        }
+
+        [Then]
+        public void TheResultIsCorrect()
+        {
+            Assert.That(Result, Is.EqualTo(3981));
+        }
+    }
+
     public class WhenICalculateTheCost : GivenA<CalculatorEngine, Decimal>
     {
         protected override void When()

@@ -1,0 +1,55 @@
+﻿@using Prospector.Presentation.ViewModels
+@model HoldingViewModel[]
+
+@{
+    ViewBag.Title = "Holdings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Holdings</h3>
+<div class="notification">
+    <p>
+        <strong>NOTE: </strong> 'Profit Price' and 'Earnings' is based on a default 2% increase unless specified otherwise
+    </p>
+</div>
+<div class="section">
+    <table>
+        <thead class="tableheader">
+            <tr>
+                <td class="dataColumn">Code</td>
+                <td class="dataColumn">Date</td>
+                <td class="dataColumn">Shares</td>
+                <td class="dataColumn">Price</td>
+                <td class="dataColumn">Tax</td>
+                <td class="dataColumn">Commission</td>
+                <td class="dataColumn">Levy</td>
+                <td class="dataColumn">Cost</td>
+                <td class="dataColumn">Break Even Price</td>
+                <td class="dataColumn">Percentage</td>
+                <td class="dataColumn">Profit Price</td>
+                <td class="dataColumn">Earnings</td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="dataColumn">@item.Code</td>
+                        <td class="dataColumn">@item.Date.ToString("yyyy-MM-dd")</td>
+                        <td class="dataColumn">@item.Shares</td>
+                        <td class="dataColumn">@item.Price</td>
+                        <td class="dataColumn">@item.Tax</td>
+                        <td class="dataColumn">@item.Commission</td>
+                        <td class="dataColumn">@item.Levy</td>
+                        <td class="dataColumn">@item.Cost</td>
+                        <td class="dataColumn">@item.BreakEvenPrice</td>
+                        <td class="dataColumn">@item.Percentage</td>
+                        <td class="dataColumn">@item.ProfitPrice</td>
+                        <td class="dataColumn">@item.Earnings</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

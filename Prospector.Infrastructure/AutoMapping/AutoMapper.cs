@@ -8,6 +8,8 @@ namespace Prospector.Infrastructure.AutoMapping
     {
         private readonly IAutoMap[] _autoMaps;
 
+        private IMapper _mapper;
+
         public AutoMapper(IAutoMap[] autoMaps)
         {
             _autoMaps = autoMaps;
@@ -15,18 +17,25 @@ namespace Prospector.Infrastructure.AutoMapping
 
         public TD Map<TS, TD>(TS source)
         {
-            return Mapper.Map<TS, TD>(source);
+            return _mapper.Map<TS, TD>(source);
         }
 
         public TD Map<TS, TD>(TS source, TD destination)
         {
-            return Mapper.Map(source, destination);
+            return _mapper.Map(source, destination);
         }
 
         public void InitializeMaps()
         {
-            Array.ForEach(_autoMaps, map => map.CreateMap());
-            Mapper.AssertConfigurationIsValid();
+            var config = new MapperConfiguration(cfg =>
+            {
+                foreach (var item in _autoMaps)
+                {
+                    cfg.AddProfile((Profile)Activator.CreateInstance(item.GetType()));
+                }
+            });
+
+            _mapper = config.CreateMapper();
         }
     }
 }

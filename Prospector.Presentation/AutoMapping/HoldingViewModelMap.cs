@@ -5,11 +5,11 @@ using Prospector.Presentation.ViewModels;
 
 namespace Prospector.Presentation.AutoMapping
 {
-    public class HoldingViewModelMap  : IAutoMap
+    public class HoldingViewModelMap  : Profile, IAutoMap
     {
-        public void CreateMap()
+        public HoldingViewModelMap()
         {
-            Mapper.CreateMap<HoldingData, HoldingViewModel>()
+            CreateMap<HoldingData, HoldingViewModel>()
                 .ForMember(m => m.Cost, opt => opt.Ignore())
                 .ForMember(m => m.BreakEvenPrice, opt => opt.Ignore())
                 .ForMember(m => m.ProfitPrice, opt => opt.Ignore())
