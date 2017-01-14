@@ -91,7 +91,7 @@
     <Compile Include="Domain\Entities\TransactionDataSpecs\TransactionDataTests.cs" />
     <Compile Include="Domain\Parsers\DataObjectParserSpecs\DataObjectParserTests.cs" />
     <Compile Include="Domain\Parsers\EnumParserSpecs\EnumParserTests.cs" />
-    <Compile Include="Domain\Providers\HoldingDataProviderSpecs\HoldingDataProviderTests.cs" />
+    <Compile Include="Domain\Providers\DateTimeProviderSpecs\DateTimeProviderTests.cs" />
     <Compile Include="Domain\Providers\JsonProviderSpecs\JsonProviderTests.cs" />
     <Compile Include="Domain\Repositories\TransactionRepositorySpecs\TransactionRepositoryTests.cs" />
     <Compile Include="GivenA.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="Presentation\ViewModelBuilders\HoldingViewModelBuilderSpecs\HoldingViewModelBuilderTests.cs" />
     <Compile Include="Presentation\ViewModels\CalculatorViewModelSpecs\CalculatorViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\HoldingViewModelSpecs\HoldingViewModelTests.cs" />
+    <Compile Include="Presentation\ViewModels\TransactionSearchViewModelSpecs\TransactionSearchViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\TransactionViewModelSpecs\TransactionViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />

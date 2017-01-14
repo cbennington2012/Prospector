@@ -10,6 +10,8 @@ namespace Prospector.Presentation.AutoMapping
         public TransactionViewModelMap()
         {
             CreateMap<TransactionViewModel, TransactionData>();
+
+            CreateMap<TransactionData, TransactionViewModel>();
         }
     }
 }

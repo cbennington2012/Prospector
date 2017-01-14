@@ -21,7 +21,10 @@
     text-decoration: underline;
 }
 
-.navbar { margin-bottom: 0 !important; }
+.navbar {
+    margin-bottom: 0 !important;
+    min-height: 0px !important;
+}
 
 .navBarHeader {
     color: inherit;
@@ -85,7 +88,7 @@
     font-size: 18px;
     font-weight: 200;
     line-height: 30px;
-    margin-bottom: 30px;
+    margin: 30px 0px 30px 0px;
     padding: 10px 60px 10px 60px;
 }
 
@@ -173,6 +176,11 @@
     width: 10%;
 }
 
+.descriptionColumn {
+    text-align: center;
+    width: 20%;
+}
+
 .columnContainer {
     width: 100%;
 }
@@ -184,5 +192,22 @@
 
 .rightColumn {
     width: 74%;
+    display: inline-block;
+}
 
+.overflowTable {
+    height: 500px;
+    overflow: auto;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.green {
+    background-color: #D8E4BC;
+}
+
+.red {
+    background-color: #E6B8B7;
 }

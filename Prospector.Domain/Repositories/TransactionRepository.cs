@@ -30,9 +30,16 @@ namespace Prospector.Domain.Repositories
             return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).ToList();
         }
 
-        public void Add(TransactionData data)
+        public void AddTransaction(TransactionData data)
         {
             _mySqlProvider.ExecuteProcedure(ConnectionString, "spInsertTransaction", GetInsertParameters(data));
+        }
+
+        public IList<TransactionData> GetTransactions(DateTime startDate, DateTime endDate)
+        {
+            var results = _mySqlProvider.GetData(ConnectionString, "spGetTransactions", GetSearchParameters(startDate, endDate));
+
+            return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).ToList();
         }
 
         internal IDictionary<String, Object> GetInsertParameters(TransactionData transactionData)
@@ -49,6 +56,15 @@ namespace Prospector.Domain.Repositories
                 { "@Commission", transactionData.Commission },
                 { "@Levy", transactionData.Levy },
                 { "@Percentage", transactionData.Percentage }
+            };
+        }
+
+        internal IDictionary<String, Object> GetSearchParameters(DateTime startDate, DateTime endDate)
+        {
+            return new Dictionary<string, object>
+            {
+                { "@StartDate", startDate.ToString("yyyy-MM-dd 00:00:00") },
+                { "@EndDate", endDate.ToString("yyyy-MM-dd 23:59:59")}
             };
         }
     }

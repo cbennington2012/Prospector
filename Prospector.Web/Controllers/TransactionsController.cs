@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Prospector.Domain.Contracts.AutoMapping;
+using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Contracts.Repositories;
 using Prospector.Domain.Entities;
 using Prospector.Domain.Parsers;
@@ -12,17 +14,47 @@ namespace Prospector.Web.Controllers
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IAutoMapper _autoMapper;
+        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IAppSettingProvider _appSettingProvider;
 
-        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper)
+        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, IAppSettingProvider appSettingProvider)
         {
             _transactionRepository = transactionRepository;
             _autoMapper = autoMapper;
+            _dateTimeProvider = dateTimeProvider;
+            _appSettingProvider = appSettingProvider;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var startDate = _dateTimeProvider.GetTransactionStartDate(DateTime.UtcNow);
+            var endDate = _dateTimeProvider.GetTransactionEndDate(DateTime.UtcNow);
+
+            var data = _transactionRepository.GetTransactions(startDate, endDate);
+            var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
+
+            var viewModel = new TransactionSearchViewModel
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                Results = results,
+                MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget")),
+                TaxFreeAllowance = Decimal.Parse(_appSettingProvider.Get("TaxFreeAllowance"))
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(TransactionSearchViewModel viewModel)
+        {
+            var data = _transactionRepository.GetTransactions(viewModel.StartDate, viewModel.EndDate);
+            var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
+
+            viewModel.Results = results;
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -36,7 +68,7 @@ namespace Prospector.Web.Controllers
         {
             var data = _autoMapper.Map<TransactionViewModel, TransactionData>(viewModel);
 
-            _transactionRepository.Add(data);
+            _transactionRepository.AddTransaction(data);
 
             var viewResult = new ViewResult
             {

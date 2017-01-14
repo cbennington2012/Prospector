@@ -55,7 +55,7 @@
     <Compile Include="Contracts\Engines\ICalculatorEngine.cs" />
     <Compile Include="Contracts\Parsers\IDataObjectParser.cs" />
     <Compile Include="Contracts\Providers\IAppSettingProvider.cs" />
-    <Compile Include="Contracts\Providers\IHoldingDataProvider.cs" />
+    <Compile Include="Contracts\Providers\IDateTimeProvider.cs" />
     <Compile Include="Contracts\Providers\IJsonProvider.cs" />
     <Compile Include="Contracts\Providers\IMySqlProvider.cs" />
     <Compile Include="Contracts\Repositories\ITransactionRepository.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Parsers\DataObjectParser.cs" />
     <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\HoldingDataProvider.cs" />
+    <Compile Include="Providers\DateTimeProvider.cs" />
     <Compile Include="Providers\JsonProvider.cs" />
     <Compile Include="Repositories\TransactionRepository.cs" />
   </ItemGroup>

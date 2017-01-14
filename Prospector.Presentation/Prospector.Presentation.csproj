@@ -89,6 +89,7 @@
     <Compile Include="ViewModelBuilders\HoldingViewModelBuilder.cs" />
     <Compile Include="ViewModels\CalculatorViewModel.cs" />
     <Compile Include="ViewModels\HoldingViewModel.cs" />
+    <Compile Include="ViewModels\TransactionSearchViewModel.cs" />
     <Compile Include="ViewModels\TransactionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
