@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Engines;
 using Prospector.Presentation.ViewModels;
 
@@ -7,10 +9,12 @@ namespace Prospector.Web.Controllers
     public class CalculatorController : Controller
     {
         private readonly ICalculatorEngine _calculatorEngine;
+        private readonly IAutoMapper _autoMapper;
 
-        public CalculatorController(ICalculatorEngine calculatorEngine)
+        public CalculatorController(ICalculatorEngine calculatorEngine, IAutoMapper autoMapper)
         {
             _calculatorEngine = calculatorEngine;
+            _autoMapper = autoMapper;
         }
 
         [HttpGet]
@@ -31,34 +35,48 @@ namespace Prospector.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(CalculatorViewModel viewModel)
+        public ActionResult Index(CalculatorViewModel viewModel, String calculate)
         {
-            viewModel.Shares = _calculatorEngine.CalculateShares(viewModel.Investment, viewModel.Commission, viewModel.Tax, 
-                viewModel.Levy, viewModel.Price);
-
-            viewModel.Cost = _calculatorEngine.CalculateCost(viewModel.Shares, viewModel.Price, viewModel.Commission,
-                viewModel.Tax, viewModel.Levy);
-
-            viewModel.BreakEvenPrice = _calculatorEngine.CalculateBreakEvenPrice(viewModel.Shares, viewModel.Price,
-                viewModel.Commission, viewModel.Tax, viewModel.Levy);
-
-            var profitPercentage = _calculatorEngine.CalculatePercentage(viewModel.Profit);
-
-            viewModel.ProfitPrice = _calculatorEngine.CalculateProfitPrice(viewModel.Shares, viewModel.Price,
-                viewModel.Commission, viewModel.Tax, viewModel.Levy, profitPercentage);
-
-            viewModel.Earnings = _calculatorEngine.CalculateEarnings(viewModel.Shares, viewModel.ProfitPrice,
-                viewModel.Commission, viewModel.Cost, viewModel.Levy);
-
-            var viewResult = new ViewResult
+            if (String.IsNullOrEmpty(calculate))
             {
-                ViewName = "Index",
-                ViewData = {Model = viewModel}
-            };
-            
-            viewResult.ViewBag.Message = "Investment Calculated";
+                var transactionViewModel = _autoMapper.Map<CalculatorViewModel, TransactionViewModel>(viewModel);
 
-            return viewResult;
+                transactionViewModel.Shares = _calculatorEngine.CalculateShares(viewModel.Investment, viewModel.Commission,
+                    viewModel.Tax,
+                    viewModel.Levy, viewModel.Price);
+
+                return View("../Transactions/Add", transactionViewModel);
+            }
+            else
+            {
+                viewModel.Shares = _calculatorEngine.CalculateShares(viewModel.Investment, viewModel.Commission,
+                    viewModel.Tax,
+                    viewModel.Levy, viewModel.Price);
+
+                viewModel.Cost = _calculatorEngine.CalculateCost(viewModel.Shares, viewModel.Price, viewModel.Commission,
+                    viewModel.Tax, viewModel.Levy);
+
+                viewModel.BreakEvenPrice = _calculatorEngine.CalculateBreakEvenPrice(viewModel.Shares, viewModel.Price,
+                    viewModel.Commission, viewModel.Tax, viewModel.Levy);
+
+                var profitPercentage = _calculatorEngine.CalculatePercentage(viewModel.Profit);
+
+                viewModel.ProfitPrice = _calculatorEngine.CalculateProfitPrice(viewModel.Shares, viewModel.Price,
+                    viewModel.Commission, viewModel.Tax, viewModel.Levy, profitPercentage);
+
+                viewModel.Earnings = _calculatorEngine.CalculateEarnings(viewModel.Shares, viewModel.ProfitPrice,
+                    viewModel.Commission, viewModel.Cost, viewModel.Levy);
+
+                var viewResult = new ViewResult
+                {
+                    ViewName = "Index",
+                    ViewData = {Model = viewModel}
+                };
+
+                viewResult.ViewBag.Message = "Investment Calculated";
+
+                return viewResult;
+            }
         }
     }
 }

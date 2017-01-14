@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using NUnit.Framework;
+using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Engines;
 using Prospector.Presentation.ViewModels;
 using Prospector.Web.Controllers;
@@ -58,7 +59,7 @@ namespace Prospector.UnitTests.Web.Controllers.CalculatorControllerSpecs
         }
     }
 
-    public class WhenIPostToTheIndex : GivenA<CalculatorController, ActionResult>
+    public class WhenIPostToTheIndexForTheCalculateOption : GivenA<CalculatorController, ActionResult>
     {
         private readonly CalculatorViewModel _viewModel = new CalculatorViewModel
         {
@@ -103,7 +104,7 @@ namespace Prospector.UnitTests.Web.Controllers.CalculatorControllerSpecs
         {
             base.When();
 
-            Result = Target.Index(_viewModel);
+            Result = Target.Index(_viewModel, "calculate");
         }
 
         [Then]
@@ -218,6 +219,55 @@ namespace Prospector.UnitTests.Web.Controllers.CalculatorControllerSpecs
         public void TheEarningsValueIsCorrect()
         {
             Assert.That(((Result as ViewResult).ViewData.Model as CalculatorViewModel).Earnings, Is.EqualTo(150.5));
+        }
+    }
+
+    public class WhenIPostToTheIndexViewForTheAddHoldingsOption : GivenA<CalculatorController, ActionResult>
+    {
+        private readonly CalculatorViewModel _viewModel = new CalculatorViewModel
+        {
+            Investment = 10000,
+            Commission = 5.95M,
+            Tax = 50,
+            Levy = 1,
+            Price = 249.75M,
+            Profit = 2M
+        };
+
+        private readonly TransactionViewModel _transactionViewModel = new TransactionViewModel();
+
+        protected override void Given()
+        {
+            base.Given();
+
+            GetMock<IAutoMapper>()
+                .Setup(m => m.Map<CalculatorViewModel, TransactionViewModel>(_viewModel))
+                .Returns(_transactionViewModel);
+        }
+
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.Index(_viewModel, "");
+        }
+
+        [Then]
+        public void TheAutoMappperMapsTheViewModels()
+        {
+            Verify<IAutoMapper>(m => m.Map<CalculatorViewModel, TransactionViewModel>(_viewModel));
+        }
+
+        [Then]
+        public void TheCalculatorEngineCalculatesTheShares()
+        {
+            Verify<ICalculatorEngine>(m => m.CalculateShares(10000, 5.95M, 50, 1, 249.75M));
+        }
+
+        [Then]
+        public void TheResultIsAViewResult()
+        {
+            Assert.That(Result, Is.AssignableTo<ViewResult>());
         }
     }
 }

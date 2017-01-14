@@ -53,6 +53,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -88,17 +89,23 @@
     <Compile Include="Domain\Engines\CalculatorEngineSpecs\CalculatorEngineTests.cs" />
     <Compile Include="Domain\Entities\HoldingDataSpecs\HoldingDataTests.cs" />
     <Compile Include="Domain\Entities\TransactionDataSpecs\TransactionDataTests.cs" />
+    <Compile Include="Domain\Parsers\DataObjectParserSpecs\DataObjectParserTests.cs" />
+    <Compile Include="Domain\Parsers\EnumParserSpecs\EnumParserTests.cs" />
     <Compile Include="Domain\Providers\HoldingDataProviderSpecs\HoldingDataProviderTests.cs" />
     <Compile Include="Domain\Providers\JsonProviderSpecs\JsonProviderTests.cs" />
+    <Compile Include="Domain\Repositories\TransactionRepositorySpecs\TransactionRepositoryTests.cs" />
     <Compile Include="GivenA.cs" />
+    <Compile Include="Presentation\Extensions\HtmlDropDownExtensionsSpecs\HtmlDropDownExtensionsTests.cs" />
     <Compile Include="Presentation\ViewModelBuilders\HoldingViewModelBuilderSpecs\HoldingViewModelBuilderTests.cs" />
     <Compile Include="Presentation\ViewModels\CalculatorViewModelSpecs\CalculatorViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\HoldingViewModelSpecs\HoldingViewModelTests.cs" />
+    <Compile Include="Presentation\ViewModels\TransactionViewModelSpecs\TransactionViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Web\Controllers\CalculatorControllerSpecs\CalculatorControllerTests.cs" />
     <Compile Include="Web\Controllers\HoldingsControllerSpecs\HoldingsControllerTests.cs" />
     <Compile Include="Web\Controllers\HomeControllerSpecs\HomeControllerTests.cs" />
+    <Compile Include="Web\Controllers\TransactionsControllerSpecs\TransactionsControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

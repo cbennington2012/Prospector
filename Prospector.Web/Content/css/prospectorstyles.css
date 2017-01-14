@@ -172,3 +172,17 @@
     text-align: center;
     width: 10%;
 }
+
+.columnContainer {
+    width: 100%;
+}
+
+.leftColumn {
+    width: 25%;
+    float: left;
+}
+
+.rightColumn {
+    width: 74%;
+
+}

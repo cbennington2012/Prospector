@@ -1,12 +1,17 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Prospector.Domain.Enumerations;
 
 namespace Prospector.Presentation.ViewModels
 {
-    public class HoldingViewModel
+    public class TransactionViewModel
     {
         public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "Please specify a Transaction Type")]
+        [DisplayName("Transaction Type")]
+        public TransactionType TransactionType { get; set; }
 
         [Required(ErrorMessage = "Please enter the Code", AllowEmptyStrings = false)]
         public String Code { get; set; }
@@ -41,10 +46,9 @@ namespace Prospector.Presentation.ViewModels
         [DataType(DataType.Currency)]
         [DisplayName("PTM Levy (£)")]
         public Decimal Levy { get; set; }
-        public Decimal Cost { get; set; }
-        public Decimal BreakEvenPrice { get; set; }
+
+        [Required(ErrorMessage = "Please enter a Profit Percentage", AllowEmptyStrings = false)]
+        [DisplayName("Profit Percentage")]
         public Decimal Percentage { get; set; }
-        public Decimal ProfitPrice { get; set; }
-        public Decimal Earnings { get; set; }
     }
 }

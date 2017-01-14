@@ -209,6 +209,8 @@
     <Content Include="Views\Calculator\Index.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Holdings\Index.cshtml" />
+    <Content Include="Views\Transactions\Add.cshtml" />
+    <Content Include="Views\Transactions\Index.cshtml" />
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -223,6 +225,7 @@
     <Compile Include="Controllers\CalculatorController.cs" />
     <Compile Include="Controllers\HoldingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />

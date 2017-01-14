@@ -49,25 +49,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\Ignore.cs" />
     <Compile Include="Contracts\AutoMapping\IAutoMap.cs" />
     <Compile Include="Contracts\AutoMapping\IAutoMapper.cs" />
     <Compile Include="Contracts\Engines\ICalculatorEngine.cs" />
+    <Compile Include="Contracts\Parsers\IDataObjectParser.cs" />
     <Compile Include="Contracts\Providers\IAppSettingProvider.cs" />
     <Compile Include="Contracts\Providers\IHoldingDataProvider.cs" />
     <Compile Include="Contracts\Providers\IJsonProvider.cs" />
+    <Compile Include="Contracts\Providers\IMySqlProvider.cs" />
     <Compile Include="Contracts\Repositories\ITransactionRepository.cs" />
     <Compile Include="Contracts\Wrappers\IIoWrapper.cs" />
+    <Compile Include="Contracts\Wrappers\IStructureMapWrapper.cs" />
     <Compile Include="Engines\CalculatorEngine.cs" />
     <Compile Include="Entities\HoldingData.cs" />
     <Compile Include="Entities\TransactionData.cs" />
+    <Compile Include="Enumerations\TransactionType.cs" />
     <Compile Include="IoC\DomainRegistry.cs" />
+    <Compile Include="Parsers\DataObjectParser.cs" />
+    <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\HoldingDataProvider.cs" />
     <Compile Include="Providers\JsonProvider.cs" />
+    <Compile Include="Repositories\TransactionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

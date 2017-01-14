@@ -1,11 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
-using Prospector.Domain.Entities;
 using Prospector.Domain.Enumerations;
+using Prospector.Presentation.ViewModels;
 
-namespace Prospector.UnitTests.Domain.Entities.TransactionDataSpecs
+namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
 {
-    public class WhenIGetATransactionDataObject : TestBase<TransactionData>
+    public class WhenIGetATransactionViewModel : TestBase<TransactionViewModel>
     {
         private readonly DateTime _date = DateTime.UtcNow;
         private readonly Guid _id = Guid.NewGuid();
@@ -14,7 +14,7 @@ namespace Prospector.UnitTests.Domain.Entities.TransactionDataSpecs
         {
             base.When();
 
-            Target = new TransactionData
+            Target = new TransactionViewModel
             {
                 Id = _id,
                 TransactionType = TransactionType.Sell,

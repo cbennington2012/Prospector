@@ -1,0 +1,119 @@
+﻿@using Prospector.Presentation.Extensions
+@using Prospector.Presentation.ViewModels
+@model TransactionViewModel
+
+@{
+    ViewBag.Title = "Add Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Add Transaction</h3>
+<form action="/Transactions/Add" method="POST">
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-horizontal">
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.TransactionType)
+            </div>
+            <div class="controls">
+                @Html.EnumDescriptionDropDownListFor(model => model.TransactionType, "--")
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.TransactionType)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Code)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Code)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Code)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Date)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Date)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Date)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Shares)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Shares)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Shares)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Price)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Tax)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Tax)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Tax)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Commission)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Commission)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Commission)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Levy)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Levy)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Levy)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                @Html.LabelFor(model => model.Percentage)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Percentage)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Percentage)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn-primary" value="isPost" id="isPost">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
