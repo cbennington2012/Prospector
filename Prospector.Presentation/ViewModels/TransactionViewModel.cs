@@ -7,7 +7,7 @@ namespace Prospector.Presentation.ViewModels
 {
     public class TransactionViewModel
     {
-        public Guid Id { get; set; }
+        public String Id { get; set; }
 
         [Required(ErrorMessage = "Please specify a Transaction Type")]
         [DisplayName("Transaction Type")]
@@ -50,5 +50,7 @@ namespace Prospector.Presentation.ViewModels
         [Required(ErrorMessage = "Please enter a Profit Percentage", AllowEmptyStrings = false)]
         [DisplayName("Profit Percentage")]
         public Decimal Percentage { get; set; }
+
+        public String SellTransactionId { get; set; }
     }
 }

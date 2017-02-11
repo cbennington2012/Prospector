@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Contracts.Repositories;
 using Prospector.Domain.Entities;
+using Prospector.Domain.Enumerations;
 using Prospector.Domain.Parsers;
 using Prospector.Presentation.ViewModels;
 
@@ -17,7 +19,8 @@ namespace Prospector.Web.Controllers
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IAppSettingProvider _appSettingProvider;
 
-        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, IAppSettingProvider appSettingProvider)
+        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, 
+            IAppSettingProvider appSettingProvider)
         {
             _transactionRepository = transactionRepository;
             _autoMapper = autoMapper;
@@ -33,7 +36,7 @@ namespace Prospector.Web.Controllers
 
             var data = _transactionRepository.GetTransactions(startDate, endDate);
             var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
-
+            
             var viewModel = new TransactionSearchViewModel
             {
                 StartDate = startDate,
@@ -72,7 +75,38 @@ namespace Prospector.Web.Controllers
 
             var viewResult = new ViewResult
             {
-                ViewName = "Index"
+                ViewName = "Add"
+            };
+
+            viewResult.ViewBag.Message =
+                $"{EnumParser.GetDescription(viewModel.TransactionType)} transaction for {viewModel.Code} completed";
+
+            return viewResult;
+        }
+
+        [HttpGet]
+        public ActionResult Sell(String Id)
+        {
+            var data = _transactionRepository.GetTransactionById(Id);
+            var viewModel = _autoMapper.Map<TransactionData, TransactionViewModel>(data);
+            viewModel.TransactionType = TransactionType.Sell;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Sell(TransactionViewModel viewModel)
+        {
+            var data = _autoMapper.Map<TransactionViewModel, TransactionData>(viewModel);
+            data.SellTransactionId = viewModel.Id;
+            data.Tax = 0;
+            data.Percentage = 0;
+
+            _transactionRepository.AddTransaction(data);
+
+            var viewResult = new ViewResult
+            {
+                ViewName = "Sell"
             };
 
             viewResult.ViewBag.Message =

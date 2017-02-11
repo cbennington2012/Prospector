@@ -107,9 +107,49 @@ namespace Prospector.UnitTests.Domain.Repositories.TransactionRepositorySpecs
         }
     }
 
+    public class WhenIGetTheTransactionById : GivenA<TransactionRepository>
+    {
+        private readonly DateTime _startDate = DateTime.UtcNow.AddDays(-1);
+        private readonly DateTime _endDate = DateTime.UtcNow;
+
+        private DataTable _sqlData;
+
+        protected override void Given()
+        {
+            base.Given();
+
+            _sqlData = new DataTable();
+            _sqlData.Columns.Add(new DataColumn("Testing"));
+            _sqlData.Rows.Add(new[] { 101 });
+
+            GetMock<IMySqlProvider>()
+                .Setup(m => m.GetData("Prospector", "spGetTransactionById", It.IsAny<IDictionary<String, Object>>()))
+                .Returns(_sqlData);
+        }
+
+        protected override void When()
+        {
+            base.When();
+
+            Target.GetTransactionById("Id");
+        }
+
+        [Then]
+        public void TheMySqlProviderGetsTheData()
+        {
+            Verify<IMySqlProvider>(m => m.GetData("Prospector", "spGetTransactionById", It.IsAny<IDictionary<String, Object>>()));
+        }
+
+        [Then]
+        public void TheDataObjectParserGetsTheObjectFromTheRow()
+        {
+            Verify<IDataObjectParser>(m => m.GetObject<TransactionData>(It.IsAny<DataRow>()));
+        }
+    }
+
     public class WhenIGetTheInsertParameters : GivenA<TransactionRepository, IDictionary<String, Object>>
     {
-        private readonly Guid _id = Guid.NewGuid();
+        private readonly Guid _sellTransactionId = Guid.NewGuid();
         private readonly DateTime _date = DateTime.UtcNow;
 
         private TransactionData _transactionData;
@@ -120,7 +160,6 @@ namespace Prospector.UnitTests.Domain.Repositories.TransactionRepositorySpecs
 
             _transactionData = new TransactionData
             {
-                Id = _id,
                 TransactionType = TransactionType.Sell,
                 Code = "Code",
                 Date = _date,
@@ -129,7 +168,8 @@ namespace Prospector.UnitTests.Domain.Repositories.TransactionRepositorySpecs
                 Tax = 50.25M,
                 Commission = 5.95M,
                 Levy = 1,
-                Percentage = 2.0M
+                Percentage = 2.0M,
+                SellTransactionId = _sellTransactionId.ToString()
             };
         }
 
@@ -143,7 +183,7 @@ namespace Prospector.UnitTests.Domain.Repositories.TransactionRepositorySpecs
         [Then]
         public void TheIdParameterIsCorrect()
         {
-            Assert.That(Result["@Id"], Is.EqualTo(_id));
+            Assert.IsNotNull(Result["@Id"]);
         }
 
         [Then]
@@ -199,6 +239,12 @@ namespace Prospector.UnitTests.Domain.Repositories.TransactionRepositorySpecs
         {
             Assert.That(Result["@Percentage"], Is.EqualTo(2.0));
         }
+
+        [Then]
+        public void TheSellTransactionIdParameterIsCorrect()
+        {
+            Assert.That(Result["@SellTransactionId"], Is.EqualTo(_sellTransactionId.ToString()));
+        }
     }
 
     public class WhenIGetTheSearchParameters : GivenA<TransactionRepository, IDictionary<String, Object>>
@@ -223,6 +269,22 @@ namespace Prospector.UnitTests.Domain.Repositories.TransactionRepositorySpecs
         public void TheEndDateParameterIsCorrect()
         {
             Assert.That(Result["@EndDate"], Is.EqualTo(_endDate.ToString("yyyy-MM-dd 23:59:59")));
+        }
+    }
+
+    public class WhenIGetTheGetByIdParameters : GivenA<TransactionRepository, IDictionary<String, Object>>
+    {
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.GetGetByIdParameters("Id");
+        }
+
+        [Then]
+        public void TheIdParameterIsCorrect()
+        {
+            Assert.That(Result["@Id"], Is.EqualTo("Id"));
         }
     }
 }

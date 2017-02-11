@@ -250,13 +250,116 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         [Then]
         public void TheViewNameIsCorrect()
         {
-            Assert.That((Result as ViewResult).ViewName, Is.EqualTo("Index"));
+            Assert.That((Result as ViewResult).ViewName, Is.EqualTo("Add"));
         }
 
         [Then]
         public void TheViewBagMessageIsCorrect()
         {
             Assert.That((Result as ViewResult).ViewBag.Message, Is.EqualTo("Buy transaction for TST completed"));
+        }
+    }
+
+    public class WhenIGetTheSellView : GivenA<TransactionsController, ActionResult>
+    {
+        private const String Id = "Id";
+
+        private readonly TransactionData _mockData = new TransactionData();
+        private readonly TransactionViewModel _mockViewModel = new TransactionViewModel();
+
+        protected override void Given()
+        {
+            base.Given();
+
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetTransactionById(Id))
+                .Returns(_mockData);
+
+            GetMock<IAutoMapper>()
+                .Setup(m => m.Map<TransactionData, TransactionViewModel>(_mockData))
+                .Returns(_mockViewModel);
+        }
+
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.Sell(Id);
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheTransactionById()
+        {
+            Verify<ITransactionRepository>(m => m.GetTransactionById(Id));
+        }
+
+        [Then]
+        public void TheAutoMapperMapsTheDataToTheViewModel()
+        {
+            Verify<IAutoMapper>(m => m.Map<TransactionData, TransactionViewModel>(_mockData));
+        }
+
+        [Then]
+        public void TheResultIsAViewResult()
+        {
+            Assert.That(Result, Is.AssignableTo<ViewResult>());
+        }
+    }
+
+    public class WhenIPostToTheSellView : GivenA<TransactionsController, ActionResult>
+    {
+        private readonly TransactionViewModel _viewModel = new TransactionViewModel
+        {
+            TransactionType = TransactionType.Sell,
+            Code = "TST"
+        };
+
+        private readonly TransactionData _transactionData = new TransactionData();
+
+        protected override void Given()
+        {
+            base.Given();
+
+            GetMock<IAutoMapper>()
+                .Setup(m => m.Map<TransactionViewModel, TransactionData>(_viewModel))
+                .Returns(_transactionData);
+        }
+
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.Sell(_viewModel);
+        }
+
+        [Then]
+        public void TheAutoMapperMapsTheViewModelToTheData()
+        {
+            Verify<IAutoMapper>(m => m.Map<TransactionViewModel, TransactionData>(_viewModel));
+        }
+
+        [Then]
+        public void TheTransactionRepositoryAddsTheData()
+        {
+            Verify<ITransactionRepository>(m => m.AddTransaction(_transactionData));
+        }
+
+        [Then]
+        public void TheResultIsAViewResult()
+        {
+            Assert.That(Result, Is.AssignableTo<ViewResult>());
+        }
+
+        [Then]
+        public void TheViewNameIsCorrect()
+        {
+            Assert.That((Result as ViewResult).ViewName, Is.EqualTo("Sell"));
+        }
+
+        [Then]
+        public void TheViewBagMessageIsCorrect()
+        {
+            Assert.That((Result as ViewResult).ViewBag.Message, Is.EqualTo("Sell transaction for TST completed"));
         }
     }
 }

@@ -211,6 +211,7 @@
     <Content Include="Views\Holdings\Index.cshtml" />
     <Content Include="Views\Transactions\Add.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
+    <Content Include="Views\Transactions\Sell.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />

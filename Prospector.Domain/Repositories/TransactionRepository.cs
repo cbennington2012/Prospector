@@ -42,11 +42,18 @@ namespace Prospector.Domain.Repositories
             return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).ToList();
         }
 
+        public TransactionData GetTransactionById(string id)
+        {
+            var results = _mySqlProvider.GetData(ConnectionString, "spGetTransactionById", GetGetByIdParameters(id));
+
+            return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).FirstOrDefault();
+        }
+
         internal IDictionary<String, Object> GetInsertParameters(TransactionData transactionData)
         {
             return new Dictionary<string, object>
             {
-                { "@Id", transactionData.Id },
+                { "@Id", Guid.NewGuid().ToString() },
                 { "@TransactionType", EnumParser.GetDescription(transactionData.TransactionType) },
                 { "@Code", transactionData.Code },
                 { "@Date", transactionData.Date.ToString("yyyy-MM-dd HH:mm:ss") },
@@ -55,7 +62,8 @@ namespace Prospector.Domain.Repositories
                 { "@Tax", transactionData.Tax },
                 { "@Commission", transactionData.Commission },
                 { "@Levy", transactionData.Levy },
-                { "@Percentage", transactionData.Percentage }
+                { "@Percentage", transactionData.Percentage },
+                { "@SellTransactionId", String.IsNullOrEmpty(transactionData.SellTransactionId) ? String.Empty : transactionData.SellTransactionId.ToString() }
             };
         }
 
@@ -67,5 +75,13 @@ namespace Prospector.Domain.Repositories
                 { "@EndDate", endDate.ToString("yyyy-MM-dd 23:59:59")}
             };
         }
+
+        internal IDictionary<String, Object> GetGetByIdParameters(String id)
+        {
+            return new Dictionary<string, object>
+            {
+                { "@Id", id }
+            };
+        } 
     }
 }

@@ -5,7 +5,7 @@ namespace Prospector.Domain.Entities
 {
     public class TransactionData
     {
-        public Guid Id { get; set; }
+        public String Id { get; set; }
         public TransactionType TransactionType { get; set; }
         public String Code { get; set; }
         public DateTime Date { get; set; }
@@ -15,5 +15,6 @@ namespace Prospector.Domain.Entities
         public Decimal Commission { get; set; }
         public Decimal Levy { get; set; }
         public Decimal Percentage { get; set; }
+        public String SellTransactionId { get; set; }
     }
 }

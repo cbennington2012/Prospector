@@ -9,5 +9,6 @@ namespace Prospector.Domain.Contracts.Repositories
         IList<TransactionData> GetCurrentHoldings();
         void AddTransaction(TransactionData data);
         IList<TransactionData> GetTransactions(DateTime startDate, DateTime endDate);
+        TransactionData GetTransactionById(string id);
     }
 }

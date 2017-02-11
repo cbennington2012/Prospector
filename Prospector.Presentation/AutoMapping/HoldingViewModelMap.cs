@@ -9,7 +9,7 @@ namespace Prospector.Presentation.AutoMapping
     {
         public HoldingViewModelMap()
         {
-            CreateMap<HoldingData, HoldingViewModel>()
+            CreateMap<TransactionData, HoldingViewModel>()
                 .ForMember(m => m.Cost, opt => opt.Ignore())
                 .ForMember(m => m.BreakEvenPrice, opt => opt.Ignore())
                 .ForMember(m => m.ProfitPrice, opt => opt.Ignore())

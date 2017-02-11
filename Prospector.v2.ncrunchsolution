@@ -8,12 +8,13 @@
   <FrameworkUtilisationTypeForMSpec>UseStaticAnalysis</FrameworkUtilisationTypeForMSpec>
   <FrameworkUtilisationTypeForMSTest>UseStaticAnalysis</FrameworkUtilisationTypeForMSTest>
   <FrameworkUtilisationTypeForXUnit2>UseDynamicAnalysis</FrameworkUtilisationTypeForXUnit2>
-  <NCrunchCacheStoragePath />
+  <NCrunchCacheStoragePath></NCrunchCacheStoragePath>
   <MetricsExclusionList>
 App.xaml.cs:Prospector.App\Prospector.App.csproj
 Bootstrapper.cs:Prospector.App\Prospector.App.csproj
 Global.asax.cs:Prospector.Web\Prospector.Web.csproj
 Prospector.App\Prospector.App.csproj
+Prospector.DbUpdate\Prospector.DbUpdater.csproj
 Prospector.Domain\Prospector.Domain.csproj\IoC
 Prospector.Infrastructure\Prospector.Infrastructure.csproj
 Prospector.Presentation\Prospector.Presentation.csproj\AutoMapping

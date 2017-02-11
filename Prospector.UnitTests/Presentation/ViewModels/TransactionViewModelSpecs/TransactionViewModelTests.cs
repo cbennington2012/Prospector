@@ -9,6 +9,7 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
     {
         private readonly DateTime _date = DateTime.UtcNow;
         private readonly Guid _id = Guid.NewGuid();
+        private readonly Guid _sellTransactionId = Guid.NewGuid();
 
         protected override void When()
         {
@@ -16,7 +17,7 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
 
             Target = new TransactionViewModel
             {
-                Id = _id,
+                Id = _id.ToString(),
                 TransactionType = TransactionType.Sell,
                 Code = "TST",
                 Date = _date,
@@ -25,14 +26,15 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
                 Tax = 50,
                 Commission = 5.95M,
                 Levy = 1,
-                Percentage = 2.5M
+                Percentage = 2.5M,
+                SellTransactionId = _sellTransactionId.ToString()
             };
         }
 
         [Then]
         public void TheIdPropertyIsCorrect()
         {
-            Assert.That(Target.Id, Is.EqualTo(_id));
+            Assert.That(Target.Id, Is.EqualTo(_id.ToString()));
         }
 
         [Then]
@@ -84,9 +86,15 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
         }
 
         [Then]
-        public void ThePropertyIsCorrect()
+        public void ThePercentagePropertyIsCorrect()
         {
             Assert.That(Target.Percentage, Is.EqualTo(2.5));
+        }
+
+        [Then]
+        public void TheSellTransactionIdPropertyIsCorrect()
+        {
+            Assert.That(Target.SellTransactionId, Is.EqualTo(_sellTransactionId.ToString()));
         }
     }
 }

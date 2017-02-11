@@ -3,15 +3,15 @@
 @model TransactionViewModel
 
 @{
-    ViewBag.Title = "Add Transaction";
+    ViewBag.Title = "Sell Transaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Add Transaction</h3>
+<h2>Sell Transaction</h2>
 <div class="notification">
     <p>@ViewBag.Message</p>
 </div>
-<form action="/Transactions/Add" method="POST">
+<form action="/Transactions/Sell" method="POST">
     @Html.HiddenFor(model => model.Id)
     <div class="form-horizontal">
         <div class="control-group">
@@ -71,17 +71,6 @@
         </div>
         <div class="control-group">
             <div class="control-label">
-                @Html.LabelFor(model => model.Tax)
-            </div>
-            <div class="controls">
-                @Html.EditorFor(model => model.Tax)
-                <div class="error-group">
-                    @Html.ValidationMessageFor(model => model.Tax)
-                </div>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="control-label">
                 @Html.LabelFor(model => model.Commission)
             </div>
             <div class="controls">
@@ -99,17 +88,6 @@
                 @Html.EditorFor(model => model.Levy)
                 <div class="error-group">
                     @Html.ValidationMessageFor(model => model.Levy)
-                </div>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="control-label">
-                @Html.LabelFor(model => model.Percentage)
-            </div>
-            <div class="controls">
-                @Html.EditorFor(model => model.Percentage)
-                <div class="error-group">
-                    @Html.ValidationMessageFor(model => model.Percentage)
                 </div>
             </div>
         </div>
