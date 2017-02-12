@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Prospector.Domain.Contracts.AutoMapping;
+using Prospector.Domain.Contracts.Factories;
 using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Contracts.Repositories;
 using Prospector.Domain.Entities;
@@ -18,14 +19,16 @@ namespace Prospector.Web.Controllers
         private readonly IAutoMapper _autoMapper;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IAppSettingProvider _appSettingProvider;
+        private readonly ITransactionFactory _transactionFactory;
 
         public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, 
-            IAppSettingProvider appSettingProvider)
+            IAppSettingProvider appSettingProvider, ITransactionFactory transactionFactory)
         {
             _transactionRepository = transactionRepository;
             _autoMapper = autoMapper;
             _dateTimeProvider = dateTimeProvider;
             _appSettingProvider = appSettingProvider;
+            _transactionFactory = transactionFactory;
         }
 
         [HttpGet]
@@ -33,6 +36,7 @@ namespace Prospector.Web.Controllers
         {
             var startDate = _dateTimeProvider.GetTransactionStartDate(DateTime.UtcNow);
             var endDate = _dateTimeProvider.GetTransactionEndDate(DateTime.UtcNow);
+            var numberOfMonths = _dateTimeProvider.GetTotalNumberOfMonths(startDate, endDate);
 
             var data = _transactionRepository.GetTransactions(startDate, endDate);
             var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
@@ -42,8 +46,10 @@ namespace Prospector.Web.Controllers
                 StartDate = startDate,
                 EndDate = endDate,
                 Results = results,
-                MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget")),
-                TaxFreeAllowance = Decimal.Parse(_appSettingProvider.Get("TaxFreeAllowance"))
+                MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget")) * numberOfMonths,
+                TaxFreeAllowance = Decimal.Parse(_appSettingProvider.Get("TaxFreeAllowance")),
+                TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data),
+                SinceStartTaxYear = 0
             };
 
             return View(viewModel);
@@ -52,10 +58,15 @@ namespace Prospector.Web.Controllers
         [HttpPost]
         public ActionResult Index(TransactionSearchViewModel viewModel)
         {
+            var numberOfMonths = _dateTimeProvider.GetTotalNumberOfMonths(viewModel.StartDate, viewModel.EndDate);
+
             var data = _transactionRepository.GetTransactions(viewModel.StartDate, viewModel.EndDate);
             var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
 
             viewModel.Results = results;
+            viewModel.MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"))*numberOfMonths;
+            viewModel.TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data);
+            viewModel.SinceStartTaxYear = 0;
 
             return View(viewModel);
         }

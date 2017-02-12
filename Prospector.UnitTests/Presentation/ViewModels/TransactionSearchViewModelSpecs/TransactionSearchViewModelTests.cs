@@ -22,7 +22,9 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionSearchViewMode
                 EndDate = _endDate,
                 Results = _results,
                 MonthlyTarget = 3000,
-                TaxFreeAllowance = 11500
+                TaxFreeAllowance = 11500,
+                TransactionPeriod = 2000,
+                SinceStartTaxYear = 5000
             };
         }
 
@@ -54,6 +56,18 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionSearchViewMode
         public void TheTaxFreeAllowancePropertyIsCorrect()
         {
             Assert.That(Target.TaxFreeAllowance, Is.EqualTo(11500));
+        }
+
+        [Then]
+        public void TheTransactionPeriodPropertyIsCorrect()
+        {
+            Assert.That(Target.TransactionPeriod, Is.EqualTo(2000));
+        }
+
+        [Then]
+        public void TheSinceTaxYearStartPropertyIsCorrect()
+        {
+            Assert.That(Target.SinceStartTaxYear, Is.EqualTo(5000));
         }
     }
 }

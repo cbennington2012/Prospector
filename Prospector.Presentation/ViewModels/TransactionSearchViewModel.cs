@@ -22,5 +22,7 @@ namespace Prospector.Presentation.ViewModels
 
         public Decimal MonthlyTarget { get; set; }
         public Decimal TaxFreeAllowance { get; set; }
+        public Decimal TransactionPeriod { get; set; }
+        public Decimal SinceStartTaxYear { get; set; }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="Contracts\AutoMapping\IAutoMap.cs" />
     <Compile Include="Contracts\AutoMapping\IAutoMapper.cs" />
     <Compile Include="Contracts\Engines\ICalculatorEngine.cs" />
+    <Compile Include="Contracts\Factories\ITransactionFactory.cs" />
     <Compile Include="Contracts\Parsers\IDataObjectParser.cs" />
     <Compile Include="Contracts\Providers\IAppSettingProvider.cs" />
     <Compile Include="Contracts\Providers\IDateTimeProvider.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Providers\DateTimeProvider.cs" />
     <Compile Include="Providers\JsonProvider.cs" />
     <Compile Include="Repositories\TransactionRepository.cs" />
+    <Compile Include="Factories\TransactionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

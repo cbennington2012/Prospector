@@ -64,7 +64,15 @@
                                 @{
                                     if (item.TransactionType == TransactionType.Buy)
                                     {
-                                        @Html.ActionLink("Sell", "Sell", "Transactions", new { Id = item.Id }, null)
+                                        int count = Model.Results.Count(z => z.SellTransactionId == item.Id);
+                                        if (count > 0)
+                                        {
+                                            <span>Sold</span>
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Sell", "Sell", "Transactions", new { Id = item.Id }, null)
+                                        }
                                     }
                                     else
                                     {
@@ -88,9 +96,9 @@
                 <tbody>
                     <tr>
                         <td class="descriptionColumn">Transaction Period</td>
-                        <td class="dataColumn">0</td>
+                        <td class="dataColumn">@String.Format("{0:c2}", Model.TransactionPeriod)</td>
                         <td class="descriptionColumn">Since Tax Year Start</td>
-                        <td class="dataColumn">0</td>
+                        <td class="dataColumn">@String.Format("{0:c2}", Model.SinceStartTaxYear)</td>
                     </tr>
                 <tr>
                     <td class="descriptionColumn">Monthly Target</td>
@@ -103,9 +111,9 @@
                 </tr>
                 <tr>
                     <td class="descriptionColumn">Totals</td>
-                    <td class="@String.Format("dataColumn {0}", 0 - Model.MonthlyTarget < 0 ? "red" : "green")">@String.Format("{0:C2}", 0 - Model.MonthlyTarget)</td>
+                    <td class="@String.Format("dataColumn {0}", Model.TransactionPeriod - Model.MonthlyTarget < 0 ? "red" : "green")">@String.Format("{0:C2}", Model.TransactionPeriod - Model.MonthlyTarget)</td>
                     <td class="descriptionColumn">&nbsp;</td>
-                    <td class="@String.Format("dataColumn {0}", 0 - Model.TaxFreeAllowance < 0 ? "red" : "green")">@String.Format("{0:C2}", 0 - Model.TaxFreeAllowance)</td>
+                    <td class="@String.Format("dataColumn {0}", Model.SinceStartTaxYear - Model.TaxFreeAllowance < 0 ? "red" : "green")">@String.Format("{0:C2}", Model.SinceStartTaxYear - Model.TaxFreeAllowance)</td>
                 </tr>
                 </tbody>
             </table>

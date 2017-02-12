@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Moq;
 using NUnit.Framework;
 using Prospector.Domain.Contracts.AutoMapping;
+using Prospector.Domain.Contracts.Factories;
 using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Contracts.Repositories;
 using Prospector.Domain.Entities;
@@ -33,6 +34,10 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             GetMock<IDateTimeProvider>()
                 .Setup(m => m.GetTransactionEndDate(It.IsAny<DateTime>()))
                 .Returns(_endDate);
+
+            GetMock<IDateTimeProvider>()
+                .Setup(m => m.GetTotalNumberOfMonths(_startDate, _endDate))
+                .Returns(2);
 
             GetMock<ITransactionRepository>()
                 .Setup(m => m.GetTransactions(_startDate, _endDate))
@@ -74,6 +79,12 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         }
 
         [Then]
+        public void TheDateTimeProviderGetsTheNumberOfMonths()
+        {
+            Verify<IDateTimeProvider>(m => m.GetTotalNumberOfMonths(_startDate, _endDate));
+        }
+
+        [Then]
         public void TheTransactionRepositoryGetsTheTransactions()
         {
             Verify<ITransactionRepository>(m => m.GetTransactions(_startDate, _endDate));
@@ -95,6 +106,12 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         public void TheAppSettingProviderGetsTheTaxFreeAllowanceValue()
         {
             Verify<IAppSettingProvider>(m => m.Get("TaxFreeAllowance"));
+        }
+
+        [Then]
+        public void TheTransactionFactoryGetsTheTransactionPeriodValue()
+        {
+            Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(It.Is<IList<TransactionData>>(x => x.Contains(_transactionData))));
         }
 
         [Then]
@@ -125,6 +142,12 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         public void TheResultsPropertyIsOnTheViewModel()
         {
             Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).Results, Is.Not.Null);
+        }
+
+        [Then]
+        public void TheMonthlyTargetPropertyIsCorrectOnTheViewModel()
+        {
+            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(6000));
         }
     }
 
@@ -157,6 +180,14 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             GetMock<IAutoMapper>()
                 .Setup(m => m.Map<TransactionData, TransactionViewModel>(_transactionData))
                 .Returns(_transactionViewModel);
+
+            GetMock<IAppSettingProvider>()
+                .Setup(m => m.Get("MonthlyTarget"))
+                .Returns("3000");
+
+            GetMock<IDateTimeProvider>()
+                .Setup(m => m.GetTotalNumberOfMonths(_startDate, _endDate))
+                .Returns(2);
         }
 
         protected override void When()
@@ -164,6 +195,12 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             base.When();
 
             Result = Target.Index(_viewModel);
+        }
+
+        [Then]
+        public void TheDateTimeProviderGetsTheTotalNumberOfMonths()
+        {
+            Verify<IDateTimeProvider>(m => m.GetTotalNumberOfMonths(_startDate, _endDate));
         }
 
         [Then]
@@ -179,9 +216,27 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         }
 
         [Then]
+        public void TheAppSettingProviderGetsTheMonthlyTargetValue()
+        {
+            Verify<IAppSettingProvider>(m => m.Get("MonthlyTarget"));
+        }
+
+        [Then]
+        public void TheTransactionFactoryGetsTheTransactionPeriodValue()
+        {
+            Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(It.Is<IList<TransactionData>>(x => x.Contains(_transactionData))));
+        }
+
+        [Then]
         public void TheViewDataHasTheResults()
         {
             Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).Results.Contains(_transactionViewModel));
+        }
+
+        [Then]
+        public void TheMonthlyTargetPropertyIsCorrectOnTheViewModel()
+        {
+            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(6000));
         }
     }
 

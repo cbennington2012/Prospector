@@ -89,6 +89,7 @@
     <Compile Include="Domain\Engines\CalculatorEngineSpecs\CalculatorEngineTests.cs" />
     <Compile Include="Domain\Entities\HoldingDataSpecs\HoldingDataTests.cs" />
     <Compile Include="Domain\Entities\TransactionDataSpecs\TransactionDataTests.cs" />
+    <Compile Include="Domain\Factories\TransactionFactorySpecs\TransactionFactoryTests.cs" />
     <Compile Include="Domain\Parsers\DataObjectParserSpecs\DataObjectParserTests.cs" />
     <Compile Include="Domain\Parsers\EnumParserSpecs\EnumParserTests.cs" />
     <Compile Include="Domain\Providers\DateTimeProviderSpecs\DateTimeProviderTests.cs" />
