@@ -49,7 +49,8 @@ namespace Prospector.Web.Controllers
                 MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget")) * numberOfMonths,
                 TaxFreeAllowance = Decimal.Parse(_appSettingProvider.Get("TaxFreeAllowance")),
                 TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data),
-                SinceStartTaxYear = 0
+                SinceStartTaxYear = 0,
+                ShowBuyTransactionsOnly = true
             };
 
             return View(viewModel);
@@ -63,6 +64,16 @@ namespace Prospector.Web.Controllers
             var data = _transactionRepository.GetTransactions(viewModel.StartDate, viewModel.EndDate);
             var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
 
+            if (viewModel.ShowBuyTransactionsOnly)
+            {
+                var soldTransactions = results.Where(x => x.TransactionType == TransactionType.Sell);
+                results = results.Where(x => x.TransactionType == TransactionType.Buy && String.IsNullOrEmpty(x.SellTransactionId)).ToList();
+                foreach (var item in soldTransactions)
+                {
+                    results.Remove(results.FirstOrDefault(x => x.Id == item.SellTransactionId));
+                }
+            }
+
             viewModel.Results = results;
             viewModel.MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"))*numberOfMonths;
             viewModel.TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data);
@@ -74,7 +85,9 @@ namespace Prospector.Web.Controllers
         [HttpGet]
         public ActionResult Add(TransactionViewModel viewModel)
         {
-            return View();
+            viewModel.Percentage = 2.0M;
+
+            return View(viewModel);
         }
 
         [HttpPost]

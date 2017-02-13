@@ -20,6 +20,7 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionSearchViewMode
             {
                 StartDate = _startDate,
                 EndDate = _endDate,
+                ShowBuyTransactionsOnly = true,
                 Results = _results,
                 MonthlyTarget = 3000,
                 TaxFreeAllowance = 11500,
@@ -38,6 +39,12 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionSearchViewMode
         public void TheEndDatePropertyIsCorrect()
         {
             Assert.That(Target.EndDate, Is.EqualTo(_endDate));
+        }
+
+        [Then]
+        public void TheShowBuyTransactionsOnlyPropertyIsCorrect()
+        {
+            Assert.IsTrue(Target.ShowBuyTransactionsOnly);
         }
 
         [Then]

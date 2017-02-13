@@ -167,7 +167,8 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             _viewModel = new TransactionSearchViewModel
             {
                 StartDate = _startDate,
-                EndDate = _endDate
+                EndDate = _endDate,
+                ShowBuyTransactionsOnly = true
             };
 
             GetMock<ITransactionRepository>()

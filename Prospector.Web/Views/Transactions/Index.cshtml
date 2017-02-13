@@ -30,6 +30,12 @@
                 @Html.EditorFor(model => model.EndDate)
             </div>
             <br/>
+            <div class="showSoldTransactionsContainer">
+                <strong>@Html.LabelFor(model => model.ShowBuyTransactionsOnly)</strong>
+                <br/>
+                @Html.CheckBoxFor(model => model.ShowBuyTransactionsOnly)
+            </div>
+            <br/>
             <button type="submit" class="btn-primary">Search</button>
             @Html.ActionLink("Add", "Add", "Transactions", new {Model = new TransactionViewModel()})
         </form>
@@ -71,7 +77,7 @@
                                         }
                                         else
                                         {
-                                            @Html.ActionLink("Sell", "Sell", "Transactions", new { Id = item.Id }, null)
+                                            @Html.ActionLink("Sell", "Sell", "Transactions", new { Id = item.Id }, new { Target = "_blank" })
                                         }
                                     }
                                     else

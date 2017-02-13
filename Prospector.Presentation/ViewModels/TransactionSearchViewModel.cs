@@ -18,6 +18,9 @@ namespace Prospector.Presentation.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
 
+        [DisplayName("Show Buy Transactions Only")]
+        public Boolean ShowBuyTransactionsOnly { get; set; }
+
         public IList<TransactionViewModel> Results { get; set; }
 
         public Decimal MonthlyTarget { get; set; }
