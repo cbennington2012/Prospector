@@ -7,5 +7,6 @@ namespace Prospector.Domain.Contracts.Providers
         DateTime GetTransactionStartDate(DateTime date);
         DateTime GetTransactionEndDate(DateTime date);
         Decimal GetTotalNumberOfMonths(DateTime startDate, DateTime endDate);
+        DateTime GetTaxYearStartDate(DateTime startDate);
     }
 }

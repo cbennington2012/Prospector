@@ -26,5 +26,10 @@ namespace Prospector.Domain.Factories
                     let sellCost = _calculatorEngine.CalculateCost(item.Shares, item.Price, item.Commission, item.Tax, item.Levy)
                     select sellCost - buyCost).Sum();
         }
+
+        public decimal GetTaxYearValue(IList<TransactionData> taxYearData)
+        {
+            return 0;
+        }
     }
 }

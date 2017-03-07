@@ -19,7 +19,7 @@ namespace Prospector.Presentation.ViewModels
         public Decimal Price { get; set; }
 
         [Required(ErrorMessage = "Please enter the Tax Amount", AllowEmptyStrings = false)]
-        [Range(1, 100, ErrorMessage = "Value cannot be zero")]
+        [Range(0, 1000, ErrorMessage = "Value cannot be zero")]
         [DataType(DataType.Currency)]
         [DisplayName("Tax (£)")]
         public Decimal Tax { get; set; }

@@ -40,7 +40,10 @@ namespace Prospector.Web.Controllers
 
             var data = _transactionRepository.GetTransactions(startDate, endDate);
             var results = data.Select(item => _autoMapper.Map<TransactionData, TransactionViewModel>(item)).ToList();
-            
+
+            var taxYearStartDate = _dateTimeProvider.GetTaxYearStartDate(startDate);
+            var taxYearData = _transactionRepository.GetTransactions(taxYearStartDate, endDate);
+
             var viewModel = new TransactionSearchViewModel
             {
                 StartDate = startDate,
@@ -49,7 +52,7 @@ namespace Prospector.Web.Controllers
                 MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget")) * numberOfMonths,
                 TaxFreeAllowance = Decimal.Parse(_appSettingProvider.Get("TaxFreeAllowance")),
                 TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data),
-                SinceStartTaxYear = 0,
+                SinceStartTaxYear = _transactionFactory.GetTaxYearValue(taxYearData),
                 ShowBuyTransactionsOnly = true
             };
 

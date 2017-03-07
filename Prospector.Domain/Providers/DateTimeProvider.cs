@@ -19,5 +19,11 @@ namespace Prospector.Domain.Providers
         {
             return Math.Ceiling((endDate.Subtract(startDate).Days/(365.25M/12)));
         }
+
+        public DateTime GetTaxYearStartDate(DateTime startDate)
+        {
+            //throw new NotImplementedException();
+            return DateTime.Now;
+        }
     }
 }
