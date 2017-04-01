@@ -155,9 +155,30 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
     {
         private readonly DateTime _startDate = DateTime.UtcNow.AddDays(-1);
         private readonly DateTime _endDate = DateTime.UtcNow;
-        private readonly TransactionData _transactionData = new TransactionData();
-        private readonly TransactionViewModel _transactionViewModel = new TransactionViewModel();
+        private readonly TransactionData _buyTransactionData = new TransactionData();
+        private readonly TransactionData _sellTransactionData = new TransactionData();
+        private readonly TransactionData _buyTransactionData2 = new TransactionData();
+        
+        private readonly TransactionViewModel _buyTransactionViewModel = new TransactionViewModel
+        {
+            TransactionType = TransactionType.Buy,
+            SellTransactionId = String.Empty,
+            Id = "TransactionId"
+        };
 
+        private readonly TransactionViewModel _soldTransactionViewModel = new TransactionViewModel
+        {
+            TransactionType = TransactionType.Sell,
+            Id = "TransactionId2"
+        };
+
+        private readonly TransactionViewModel _buytransactionvViewModel2 = new TransactionViewModel
+        {
+            TransactionType = TransactionType.Buy,
+            SellTransactionId = String.Empty,
+            Id = "TransactionId2"
+        };
+        
         private TransactionSearchViewModel _viewModel;
 
         protected override void Given()
@@ -175,12 +196,22 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
                 .Setup(m => m.GetTransactions(_startDate, _endDate))
                 .Returns(new List<TransactionData>
                 {
-                    _transactionData
+                    _buyTransactionData,
+                    _sellTransactionData,
+                    _buyTransactionData2
                 });
 
             GetMock<IAutoMapper>()
-                .Setup(m => m.Map<TransactionData, TransactionViewModel>(_transactionData))
-                .Returns(_transactionViewModel);
+                .Setup(m => m.Map<TransactionData, TransactionViewModel>(_buyTransactionData))
+                .Returns(_buyTransactionViewModel);
+
+            GetMock<IAutoMapper>()
+                .Setup(m => m.Map<TransactionData, TransactionViewModel>(_sellTransactionData))
+                .Returns(_soldTransactionViewModel);
+
+            GetMock<IAutoMapper>()
+                .Setup(m => m.Map<TransactionData, TransactionViewModel>(_buyTransactionData2))
+                .Returns(_buytransactionvViewModel2);
 
             GetMock<IAppSettingProvider>()
                 .Setup(m => m.Get("MonthlyTarget"))
@@ -213,7 +244,7 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         [Then]
         public void TheAutoMapperMapsTheDataToTheViewModel()
         {
-            Verify<IAutoMapper>(m => m.Map<TransactionData, TransactionViewModel>(_transactionData));
+            Verify<IAutoMapper>(m => m.Map<TransactionData, TransactionViewModel>(_buyTransactionData));
         }
 
         [Then]
@@ -225,22 +256,28 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         [Then]
         public void TheTransactionFactoryGetsTheTransactionPeriodValue()
         {
-            Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(It.Is<IList<TransactionData>>(x => x.Contains(_transactionData))));
+            Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(It.Is<IList<TransactionData>>(x => x.Contains(_buyTransactionData))));
         }
 
         [Then]
         public void TheViewDataHasTheResults()
         {
-            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).Results.Contains(_transactionViewModel));
+            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).Results.Contains(_buyTransactionViewModel));
         }
 
         [Then]
         public void TheMonthlyTargetPropertyIsCorrectOnTheViewModel()
         {
-            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(6000));
+            Assert.That(((Result as ViewResult).Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(3000));
+        }
+
+        [Then]
+        public void TheCumulativeTargetPropertyIsCorrectOnTheViewModel()
+        {
+            Assert.That(((Result as ViewResult).Model as TransactionSearchViewModel).CumulativeTarget, Is.EqualTo(6000));
         }
     }
-
+    
     public class WhenIGetTheAddView : GivenA<TransactionsController, ActionResult>
     {
         private readonly TransactionViewModel _transactionViewModel = new TransactionViewModel();

@@ -78,7 +78,8 @@ namespace Prospector.Web.Controllers
             }
 
             viewModel.Results = results;
-            viewModel.MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"))*numberOfMonths;
+            viewModel.MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"));
+            viewModel.CumulativeTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"))*numberOfMonths;
             viewModel.TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data);
             viewModel.SinceStartTaxYear = 0;
 

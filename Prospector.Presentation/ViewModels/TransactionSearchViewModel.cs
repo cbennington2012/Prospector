@@ -24,6 +24,7 @@ namespace Prospector.Presentation.ViewModels
         public IList<TransactionViewModel> Results { get; set; }
 
         public Decimal MonthlyTarget { get; set; }
+        public Decimal CumulativeTarget { get; set; }
         public Decimal TaxFreeAllowance { get; set; }
         public Decimal TransactionPeriod { get; set; }
         public Decimal SinceStartTaxYear { get; set; }

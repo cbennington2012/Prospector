@@ -23,6 +23,7 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionSearchViewMode
                 ShowBuyTransactionsOnly = true,
                 Results = _results,
                 MonthlyTarget = 3000,
+                CumulativeTarget = 9000,
                 TaxFreeAllowance = 11500,
                 TransactionPeriod = 2000,
                 SinceStartTaxYear = 5000
@@ -57,6 +58,12 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionSearchViewMode
         public void TheMonthlyTargetPropertyIsCorrect()
         {
             Assert.That(Target.MonthlyTarget, Is.EqualTo(3000));
+        }
+
+        [Then]
+        public void TheCumulativeTargetPropertyIsSet()
+        {
+            Assert.That(Target.CumulativeTarget, Is.EqualTo(9000));
         }
 
         [Then]

@@ -5,6 +5,13 @@ namespace Prospector.Domain.Providers
 {
     public class DateTimeProvider : IDateTimeProvider
     {
+        private readonly IAppSettingProvider _appSettingProvider;
+
+        public DateTimeProvider(IAppSettingProvider appSettingProvider)
+        {
+            _appSettingProvider = appSettingProvider;
+        }
+
         public DateTime GetTransactionStartDate(DateTime date)
         {
             return DateTime.Parse(date.ToString("yyyy-MM-01 00:00:00"));
@@ -22,8 +29,14 @@ namespace Prospector.Domain.Providers
 
         public DateTime GetTaxYearStartDate(DateTime startDate)
         {
-            //throw new NotImplementedException();
-            return DateTime.Now;
+            var taxYearStartSlug = _appSettingProvider.Get("TaxYearStart");
+
+            if (startDate < DateTime.Parse($"{DateTime.Today.Year}-{taxYearStartSlug} 00:00:00"))
+            {
+                return DateTime.Parse($"{startDate.Year}-{taxYearStartSlug} 00:00:00");
+            }
+
+            return DateTime.Parse($"{DateTime.Today.Year}-{taxYearStartSlug} 00:00:00");
         }
     }
 }

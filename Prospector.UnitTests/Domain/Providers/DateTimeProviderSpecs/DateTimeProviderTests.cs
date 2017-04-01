@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Providers;
 
 namespace Prospector.UnitTests.Domain.Providers.DateTimeProviderSpecs
@@ -35,6 +36,61 @@ namespace Prospector.UnitTests.Domain.Providers.DateTimeProviderSpecs
         public void TheResultIsCorrect()
         {
             Assert.That(Target.GetTotalNumberOfMonths(_startDate, _endDate), Is.EqualTo(5M));
+        }
+    }
+
+    public abstract class WhenIGetTheTaxYearStartDate : GivenA<DateTimeProvider, DateTime>
+    {
+        private const String TaxYearStart = "04-05";
+
+        protected DateTime StartDate;
+
+        protected override void Given()
+        {
+            base.Given();
+
+            GetMock<IAppSettingProvider>()
+                .Setup(m => m.Get("TaxYearStart"))
+                .Returns(TaxYearStart);
+        }
+
+        protected override void When()
+        {
+            base.When();
+
+            Result = Target.GetTaxYearStartDate(StartDate);
+        }
+    }
+
+    public class WhenITheStartDateIsLessThanThisYear : WhenIGetTheTaxYearStartDate
+    {
+        protected override void Given()
+        {
+            base.Given();
+
+            StartDate = DateTime.Parse("2016-01-01 00:00:00");
+        }
+
+        [Then]
+        public void TheResultIsCorrect()
+        {
+            Assert.That(Result, Is.EqualTo(DateTime.Parse("2016-04-05 00:00:00")));
+        }
+    }
+
+    public class WhenIGetTheStartDateGreaterThanThisYear : WhenIGetTheTaxYearStartDate
+    {
+        protected override void Given()
+        {
+            base.Given();
+
+            StartDate = DateTime.Parse($"{DateTime.Today.Year}-06-01 00:00:00");
+        }
+
+        [Then]
+        public void TheResultIsCorrect()
+        {
+            Assert.That(Result, Is.EqualTo(DateTime.Parse($"{DateTime.Today.Year}-04-05 00:00:00")));
         }
     }
 }
