@@ -1,15 +1,16 @@
 ﻿using System;
 using Prospector.Domain.Contracts.Providers;
+using Prospector.Domain.Contracts.Repositories;
 
 namespace Prospector.Domain.Providers
 {
     public class DateTimeProvider : IDateTimeProvider
     {
-        private readonly IAppSettingProvider _appSettingProvider;
+        private readonly ISettingRepository _settingRepository;
 
-        public DateTimeProvider(IAppSettingProvider appSettingProvider)
+        public DateTimeProvider(ISettingRepository settingRepository)
         {
-            _appSettingProvider = appSettingProvider;
+            _settingRepository = settingRepository;
         }
 
         public DateTime GetTransactionStartDate(DateTime date)
@@ -29,7 +30,7 @@ namespace Prospector.Domain.Providers
 
         public DateTime GetTaxYearStartDate(DateTime startDate)
         {
-            var taxYearStartSlug = _appSettingProvider.Get("TaxYearStart");
+            var taxYearStartSlug = _settingRepository.GetSettingByKey("TaxYearStart").SettingsValue;
 
             if (startDate < DateTime.Parse($"{DateTime.Today.Year}-{taxYearStartSlug} 00:00:00"))
             {

@@ -84,6 +84,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\008_Alter_GetCurrentHoldings_StoredProcedure.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\009_Create_Settings_Table.sql" />
+    <EmbeddedResource Include="Scripts\010_Create_GetSettings_Stored_Procedure.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\011_Create_GetSettingByKey_Stored_Procedure.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

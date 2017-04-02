@@ -1,0 +1,31 @@
+﻿@using Prospector.Presentation.ViewModels
+@model List<SettingViewModel>
+
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Settings</h3>
+<div class="section">
+    <table>
+        <thead class="tableheader">
+        <tr>
+            <td class="dataColumn">Key</td>
+            <td class="dataColumn">Value</td>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="dataColumn">@item.Key</td>
+                    <td class="dataColumn">@item.Value</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+

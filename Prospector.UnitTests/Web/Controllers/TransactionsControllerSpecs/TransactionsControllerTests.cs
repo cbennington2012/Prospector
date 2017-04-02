@@ -11,7 +11,6 @@ using Prospector.Domain.Entities;
 using Prospector.Domain.Enumerations;
 using Prospector.Presentation.ViewModels;
 using Prospector.Web.Controllers;
-using StructureMap.Graph.Scanning;
 
 namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
 {
@@ -22,6 +21,16 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
 
         private readonly TransactionData _transactionData = new TransactionData();
         private readonly TransactionViewModel _transactionViewModel = new TransactionViewModel();
+
+        private readonly SettingData _monthlyTargetSettingData = new SettingData
+        {
+            SettingsValue = "101"
+        };
+
+        private readonly SettingData _taxFreeAllowanceSettingData = new SettingData
+        {
+            SettingsValue = "202"
+        };
 
         protected override void Given()
         {
@@ -50,13 +59,13 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
                 .Setup(m => m.Map<TransactionData, TransactionViewModel>(_transactionData))
                 .Returns(_transactionViewModel);
 
-            GetMock<IAppSettingProvider>()
-                .Setup(m => m.Get("MonthlyTarget"))
-                .Returns("3000");
+            GetMock<ISettingRepository>()
+                .Setup(m => m.GetSettingByKey("DefaultMonthlyTarget"))
+                .Returns(_monthlyTargetSettingData);
 
-            GetMock<IAppSettingProvider>()
-                .Setup(m => m.Get("TaxFreeAllowance"))
-                .Returns("11500");
+            GetMock<ISettingRepository>()
+                .Setup(m => m.GetSettingByKey("TaxFreeAllowance"))
+                .Returns(_taxFreeAllowanceSettingData);
         }
 
         protected override void When()
@@ -97,15 +106,15 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         }
 
         [Then]
-        public void TheAppSettingProviderGetsTheMonthlyTargetValue()
+        public void TheSettingRepositoryGetsTheMonthlyTargetValue()
         {
-            Verify<IAppSettingProvider>(m => m.Get("MonthlyTarget"));
+            Verify<ISettingRepository>(m => m.GetSettingByKey("DefaultMonthlyTarget"));
         }
 
         [Then]
-        public void TheAppSettingProviderGetsTheTaxFreeAllowanceValue()
+        public void TheSettingRepositoryGetsTheTaxFreeAllowanceValue()
         {
-            Verify<IAppSettingProvider>(m => m.Get("TaxFreeAllowance"));
+            Verify<ISettingRepository>(m => m.GetSettingByKey("TaxFreeAllowance"));
         }
 
         [Then]
@@ -147,7 +156,7 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         [Then]
         public void TheMonthlyTargetPropertyIsCorrectOnTheViewModel()
         {
-            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(6000));
+            Assert.That(((Result as ViewResult).ViewData.Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(101));
         }
     }
 
@@ -158,7 +167,12 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         private readonly TransactionData _buyTransactionData = new TransactionData();
         private readonly TransactionData _sellTransactionData = new TransactionData();
         private readonly TransactionData _buyTransactionData2 = new TransactionData();
-        
+
+        private readonly SettingData _monthlyTargetSettingData = new SettingData
+        {
+            SettingsValue = "101"
+        };
+
         private readonly TransactionViewModel _buyTransactionViewModel = new TransactionViewModel
         {
             TransactionType = TransactionType.Buy,
@@ -213,9 +227,9 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
                 .Setup(m => m.Map<TransactionData, TransactionViewModel>(_buyTransactionData2))
                 .Returns(_buytransactionvViewModel2);
 
-            GetMock<IAppSettingProvider>()
-                .Setup(m => m.Get("MonthlyTarget"))
-                .Returns("3000");
+            GetMock<ISettingRepository>()
+                .Setup(m => m.GetSettingByKey("DefaultMonthlyTarget"))
+                .Returns(_monthlyTargetSettingData);
 
             GetMock<IDateTimeProvider>()
                 .Setup(m => m.GetTotalNumberOfMonths(_startDate, _endDate))
@@ -248,9 +262,9 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         }
 
         [Then]
-        public void TheAppSettingProviderGetsTheMonthlyTargetValue()
+        public void TheSettingRepositoryGetsTheMonthlyTargetValue()
         {
-            Verify<IAppSettingProvider>(m => m.Get("MonthlyTarget"));
+            Verify<ISettingRepository>(m => m.GetSettingByKey("DefaultMonthlyTarget"));
         }
 
         [Then]
@@ -268,13 +282,13 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         [Then]
         public void TheMonthlyTargetPropertyIsCorrectOnTheViewModel()
         {
-            Assert.That(((Result as ViewResult).Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(3000));
+            Assert.That(((Result as ViewResult).Model as TransactionSearchViewModel).MonthlyTarget, Is.EqualTo(101));
         }
 
         [Then]
         public void TheCumulativeTargetPropertyIsCorrectOnTheViewModel()
         {
-            Assert.That(((Result as ViewResult).Model as TransactionSearchViewModel).CumulativeTarget, Is.EqualTo(6000));
+            Assert.That(((Result as ViewResult).Model as TransactionSearchViewModel).CumulativeTarget, Is.EqualTo(202));
         }
     }
     

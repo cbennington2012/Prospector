@@ -12,8 +12,6 @@ namespace Prospector.Domain.Repositories
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private const String ConnectionString = "Prospector";
-
         private readonly IMySqlProvider _mySqlProvider;
         private readonly IDataObjectParser _dataObjectParser;
 
@@ -25,26 +23,26 @@ namespace Prospector.Domain.Repositories
 
         public IList<TransactionData> GetCurrentHoldings()
         {
-            var results = _mySqlProvider.GetData(ConnectionString, "spGetCurrentHoldings", new Dictionary<string, object>());
+            var results = _mySqlProvider.GetData(Constants.ConnectionStrings.Prospector, "spGetCurrentHoldings", new Dictionary<string, object>());
 
             return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).ToList();
         }
 
         public void AddTransaction(TransactionData data)
         {
-            _mySqlProvider.ExecuteProcedure(ConnectionString, "spInsertTransaction", GetInsertParameters(data));
+            _mySqlProvider.ExecuteProcedure(Constants.ConnectionStrings.Prospector, "spInsertTransaction", GetInsertParameters(data));
         }
 
         public IList<TransactionData> GetTransactions(DateTime startDate, DateTime endDate)
         {
-            var results = _mySqlProvider.GetData(ConnectionString, "spGetTransactions", GetSearchParameters(startDate, endDate));
+            var results = _mySqlProvider.GetData(Constants.ConnectionStrings.Prospector, "spGetTransactions", GetSearchParameters(startDate, endDate));
 
             return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).ToList();
         }
 
         public TransactionData GetTransactionById(string id)
         {
-            var results = _mySqlProvider.GetData(ConnectionString, "spGetTransactionById", GetGetByIdParameters(id));
+            var results = _mySqlProvider.GetData(Constants.ConnectionStrings.Prospector, "spGetTransactionById", GetGetByIdParameters(id));
 
             return (from DataRow item in results.Rows select _dataObjectParser.GetObject<TransactionData>(item)).FirstOrDefault();
         }

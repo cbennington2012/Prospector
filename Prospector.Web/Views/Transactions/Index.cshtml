@@ -123,7 +123,7 @@
                 </tr>
                 <tr>
                     <td class="descriptionColumn">Totals</td>
-                    <td class="@String.Format("dataColumn {0}", Model.TransactionPeriod - Model.MonthlyTarget < 0 ? "red" : "green")">@String.Format("{0:C2}", Model.TransactionPeriod - Model.CumulativeTarget)</td>
+                    <td class="@String.Format("dataColumn {0}", Model.TransactionPeriod - Model.CumulativeTarget < 0 ? "red" : "green")">@String.Format("{0:C2}", Model.TransactionPeriod - Model.CumulativeTarget)</td>
                     <td class="descriptionColumn">&nbsp;</td>
                     <td class="@String.Format("dataColumn {0}", Model.SinceStartTaxYear - Model.TaxFreeAllowance < 0 ? "red" : "green")">@String.Format("{0:C2}", Model.SinceStartTaxYear - Model.TaxFreeAllowance)</td>
                 </tr>

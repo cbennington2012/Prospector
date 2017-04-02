@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="AutoMapping\CalculatorTransactionViewModelMap.cs" />
     <Compile Include="AutoMapping\HoldingViewModelMap.cs" />
+    <Compile Include="AutoMapping\SettingViewModelMap.cs" />
     <Compile Include="AutoMapping\TransactionViewModelMap.cs" />
     <Compile Include="Contracts\IHoldingViewModelBuilder.cs" />
     <Compile Include="Extensions\HtmlDropDownExtensions.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="ViewModelBuilders\HoldingViewModelBuilder.cs" />
     <Compile Include="ViewModels\CalculatorViewModel.cs" />
     <Compile Include="ViewModels\HoldingViewModel.cs" />
+    <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\TransactionSearchViewModel.cs" />
     <Compile Include="ViewModels\TransactionViewModel.cs" />
   </ItemGroup>

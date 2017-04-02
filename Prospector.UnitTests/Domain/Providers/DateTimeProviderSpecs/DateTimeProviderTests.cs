@@ -1,6 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using Prospector.Domain.Contracts.Providers;
+using Prospector.Domain.Contracts.Repositories;
+using Prospector.Domain.Entities;
 using Prospector.Domain.Providers;
 
 namespace Prospector.UnitTests.Domain.Providers.DateTimeProviderSpecs
@@ -43,15 +45,22 @@ namespace Prospector.UnitTests.Domain.Providers.DateTimeProviderSpecs
     {
         private const String TaxYearStart = "04-05";
 
+        private SettingData _settingData;
+
         protected DateTime StartDate;
 
         protected override void Given()
         {
             base.Given();
 
-            GetMock<IAppSettingProvider>()
-                .Setup(m => m.Get("TaxYearStart"))
-                .Returns(TaxYearStart);
+            _settingData = new SettingData
+            {
+                SettingsValue = TaxYearStart
+            };
+
+            GetMock<ISettingRepository>()
+                .Setup(m => m.GetSettingByKey("TaxYearStart"))
+                .Returns(_settingData);
         }
 
         protected override void When()
@@ -69,6 +78,12 @@ namespace Prospector.UnitTests.Domain.Providers.DateTimeProviderSpecs
             base.Given();
 
             StartDate = DateTime.Parse("2016-01-01 00:00:00");
+        }
+
+        [Then]
+        public void TheSettingRepositoryGetsTheTaxYearStartDateParameter()
+        {
+            Verify<ISettingRepository>(m => m.GetSettingByKey("TaxYearStart"));
         }
 
         [Then]

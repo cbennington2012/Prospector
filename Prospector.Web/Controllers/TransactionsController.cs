@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Prospector.Domain.Contracts.AutoMapping;
@@ -18,17 +17,16 @@ namespace Prospector.Web.Controllers
         private readonly ITransactionRepository _transactionRepository;
         private readonly IAutoMapper _autoMapper;
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IAppSettingProvider _appSettingProvider;
         private readonly ITransactionFactory _transactionFactory;
+        private readonly ISettingRepository _settingRepository;
 
-        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, 
-            IAppSettingProvider appSettingProvider, ITransactionFactory transactionFactory)
+        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, ITransactionFactory transactionFactory, ISettingRepository settingRepository)
         {
             _transactionRepository = transactionRepository;
             _autoMapper = autoMapper;
             _dateTimeProvider = dateTimeProvider;
-            _appSettingProvider = appSettingProvider;
             _transactionFactory = transactionFactory;
+            _settingRepository = settingRepository;
         }
 
         [HttpGet]
@@ -44,13 +42,16 @@ namespace Prospector.Web.Controllers
             var taxYearStartDate = _dateTimeProvider.GetTaxYearStartDate(startDate);
             var taxYearData = _transactionRepository.GetTransactions(taxYearStartDate, endDate);
 
+            var monthlyTargetSetting = _settingRepository.GetSettingByKey("DefaultMonthlyTarget");
+
             var viewModel = new TransactionSearchViewModel
             {
                 StartDate = startDate,
                 EndDate = endDate,
                 Results = results,
-                MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget")) * numberOfMonths,
-                TaxFreeAllowance = Decimal.Parse(_appSettingProvider.Get("TaxFreeAllowance")),
+                MonthlyTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue),
+                CumulativeTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue) * numberOfMonths,
+                TaxFreeAllowance = Decimal.Parse(_settingRepository.GetSettingByKey("TaxFreeAllowance").SettingsValue),
                 TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data),
                 SinceStartTaxYear = _transactionFactory.GetTaxYearValue(taxYearData),
                 ShowBuyTransactionsOnly = true
@@ -77,9 +78,11 @@ namespace Prospector.Web.Controllers
                 }
             }
 
+            var monthlyTargetSetting = _settingRepository.GetSettingByKey("DefaultMonthlyTarget");
+
             viewModel.Results = results;
-            viewModel.MonthlyTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"));
-            viewModel.CumulativeTarget = Decimal.Parse(_appSettingProvider.Get("MonthlyTarget"))*numberOfMonths;
+            viewModel.MonthlyTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue);
+            viewModel.CumulativeTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue) *numberOfMonths;
             viewModel.TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data);
             viewModel.SinceStartTaxYear = 0;
 

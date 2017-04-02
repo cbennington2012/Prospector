@@ -88,18 +88,21 @@
   <ItemGroup>
     <Compile Include="Domain\Engines\CalculatorEngineSpecs\CalculatorEngineTests.cs" />
     <Compile Include="Domain\Entities\HoldingDataSpecs\HoldingDataTests.cs" />
+    <Compile Include="Domain\Entities\SettingDataSpecs\SettingDataTests.cs" />
     <Compile Include="Domain\Entities\TransactionDataSpecs\TransactionDataTests.cs" />
     <Compile Include="Domain\Factories\TransactionFactorySpecs\TransactionFactoryTests.cs" />
     <Compile Include="Domain\Parsers\DataObjectParserSpecs\DataObjectParserTests.cs" />
     <Compile Include="Domain\Parsers\EnumParserSpecs\EnumParserTests.cs" />
     <Compile Include="Domain\Providers\DateTimeProviderSpecs\DateTimeProviderTests.cs" />
     <Compile Include="Domain\Providers\JsonProviderSpecs\JsonProviderTests.cs" />
+    <Compile Include="Domain\Repositories\SettingRepositorySpecs\SettingRepositoryTests.cs" />
     <Compile Include="Domain\Repositories\TransactionRepositorySpecs\TransactionRepositoryTests.cs" />
     <Compile Include="GivenA.cs" />
     <Compile Include="Presentation\Extensions\HtmlDropDownExtensionsSpecs\HtmlDropDownExtensionsTests.cs" />
     <Compile Include="Presentation\ViewModelBuilders\HoldingViewModelBuilderSpecs\HoldingViewModelBuilderTests.cs" />
     <Compile Include="Presentation\ViewModels\CalculatorViewModelSpecs\CalculatorViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\HoldingViewModelSpecs\HoldingViewModelTests.cs" />
+    <Compile Include="Presentation\ViewModels\SettingViewModelSpecs\SettingViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\TransactionSearchViewModelSpecs\TransactionSearchViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\TransactionViewModelSpecs\TransactionViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="Web\Controllers\CalculatorControllerSpecs\CalculatorControllerTests.cs" />
     <Compile Include="Web\Controllers\HoldingsControllerSpecs\HoldingsControllerTests.cs" />
     <Compile Include="Web\Controllers\HomeControllerSpecs\HomeControllerTests.cs" />
+    <Compile Include="Web\Controllers\SettingsControllerSpecs\SettingsControllerTests.cs" />
     <Compile Include="Web\Controllers\TransactionsControllerSpecs\TransactionsControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
