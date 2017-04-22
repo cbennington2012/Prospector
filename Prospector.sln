@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prospector.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prospector.Web", "Prospector.Web\Prospector.Web.csproj", "{0C7C2D85-D931-484C-AD47-641494B3D0D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prospector.DbUpdater", "Prospector.DbUpdate\Prospector.DbUpdater.csproj", "{49FCE6B9-2585-4D61-AB8A-D1643C39036C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prospector.DbUpdater", "Prospector.DbUpdater\Prospector.DbUpdater.csproj", "{49FCE6B9-2585-4D61-AB8A-D1643C39036C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{FDB81E79-BC76-48AB-8D92-A04683AF562E}"
 EndProject
