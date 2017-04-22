@@ -99,6 +99,7 @@
     <Compile Include="Domain\Repositories\TransactionRepositorySpecs\TransactionRepositoryTests.cs" />
     <Compile Include="GivenA.cs" />
     <Compile Include="Presentation\Extensions\HtmlDropDownExtensionsSpecs\HtmlDropDownExtensionsTests.cs" />
+    <Compile Include="Presentation\Formatters\SplitStringFormatterSpecs\SplitStringFormatterTests.cs" />
     <Compile Include="Presentation\ViewModelBuilders\HoldingViewModelBuilderSpecs\HoldingViewModelBuilderTests.cs" />
     <Compile Include="Presentation\ViewModels\CalculatorViewModelSpecs\CalculatorViewModelTests.cs" />
     <Compile Include="Presentation\ViewModels\HoldingViewModelSpecs\HoldingViewModelTests.cs" />
