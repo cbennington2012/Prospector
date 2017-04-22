@@ -21,6 +21,7 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
                 TransactionType = TransactionType.Sell,
                 Code = "TST",
                 Date = _date,
+                Time = _date,
                 Shares = 1000,
                 Price = 249.75M,
                 Tax = 50,
@@ -53,6 +54,12 @@ namespace Prospector.UnitTests.Presentation.ViewModels.TransactionViewModelSpecs
         public void TheDatePropertyIsCorrect()
         {
             Assert.That(Target.Date, Is.EqualTo(_date));
+        }
+
+        [Then]
+        public void TheTimePropertyIsCorrect()
+        {
+            Assert.That(Target.Time, Is.EqualTo(_date));
         }
 
         [Then]

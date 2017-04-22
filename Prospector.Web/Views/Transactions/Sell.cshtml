@@ -49,6 +49,17 @@
         </div>
         <div class="control-group">
             <div class="control-label">
+                @Html.LabelFor(model => model.Time)
+            </div>
+            <div class="controls">
+                @Html.EditorFor(model => model.Time)
+                <div class="error-group">
+                    @Html.ValidationMessageFor(model => model.Time)
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
                 @Html.LabelFor(model => model.Shares)
             </div>
             <div class="controls">

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Entities;
 using Prospector.Presentation.ViewModels;
@@ -9,9 +10,12 @@ namespace Prospector.Presentation.AutoMapping
     {
         public TransactionViewModelMap()
         {
-            CreateMap<TransactionViewModel, TransactionData>();
+            CreateMap<TransactionViewModel, TransactionData>()
+                .ForMember(m => m.Date, opt => opt.MapFrom(x => DateTime.Parse($"{x.Date.ToString("yyyy-MM-dd")} {x.Time.ToString("HH:mm:ss")}")));
 
-            CreateMap<TransactionData, TransactionViewModel>();
+            CreateMap<TransactionData, TransactionViewModel>()
+                .ForMember(m => m.Date, opt => opt.MapFrom(x => DateTime.Parse(x.Date.ToString("yyyy-MM-dd"))))
+                .ForMember(m => m.Time, opt => opt.MapFrom(x => x.Date));
         }
     }
 }

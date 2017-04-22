@@ -20,6 +20,10 @@ namespace Prospector.Presentation.ViewModels
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
+        [Required(ErrorMessage = "Please enter the time", AllowEmptyStrings = false)]
+        [DataType(DataType.Time)]
+        public DateTime Time { get; set; }
+
         [Required(ErrorMessage = "Please enter the amount of shares")]
         [Range(1, 100000, ErrorMessage = "Value cannot be zero")]
         public int Shares { get; set; }
