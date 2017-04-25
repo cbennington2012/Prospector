@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Engines;
 using Prospector.Domain.Contracts.Repositories;
+using Prospector.Domain.Contracts.Wrappers;
 using Prospector.Domain.Entities;
 using Prospector.Presentation.ViewModelBuilders;
 using Prospector.Presentation.ViewModels;
@@ -111,9 +113,9 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         }
     }
 
-    public class WhenIBuildTheViewModels : GivenA<HoldingViewModelBuilder, IList<HoldingViewModel>>
+    public abstract class WhenIBuildTheViewModels : GivenA<HoldingViewModelBuilder, IList<HoldingViewModel>>
     {
-        private readonly TransactionData _transactionData = new TransactionData
+        protected readonly TransactionData TransactionData = new TransactionData
         {
             Percentage = 2M,
             Shares = 1000,
@@ -128,16 +130,9 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         protected override void Given()
         {
             base.Given();
-
-            GetMock<ITransactionRepository>()
-                .Setup(m => m.GetCurrentHoldings())
-                .Returns(new List<TransactionData>
-                {
-                    _transactionData
-                });
-
+            
             GetMock<IAutoMapper>()
-                .Setup(m => m.Map<TransactionData, HoldingViewModel>(_transactionData))
+                .Setup(m => m.Map<TransactionData, HoldingViewModel>(TransactionData))
                 .Returns(_holdingViewModel);
 
             GetMock<ICalculatorEngine>()
@@ -167,17 +162,11 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
 
             Result = Target.BuildViewModels();
         }
-
-        [Then]
-        public void TheTransactionRepositoryGetsTheCurrentHoldings()
-        {
-            Verify<ITransactionRepository>(m => m.GetCurrentHoldings());
-        }
-
+        
         [Then]
         public void TheAutomapperMapsTheDataToTheViewModel()
         {
-            Verify<IAutoMapper>(m => m.Map<TransactionData, HoldingViewModel>(_transactionData));
+            Verify<IAutoMapper>(m => m.Map<TransactionData, HoldingViewModel>(TransactionData));
         }
 
         [Then]
@@ -238,6 +227,52 @@ namespace Prospector.UnitTests.Presentation.ViewModelBuilders.HoldingViewModelBu
         public void TheResultContainsTheViewModel()
         {
             Assert.That(Result.Contains(_holdingViewModel));
+        }
+    }
+
+    public class WhenICanAccessTheDatabase : WhenIBuildTheViewModels
+    {
+        protected override void Given()
+        {
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetCurrentHoldings())
+                .Returns(new List<TransactionData>
+                {
+                    TransactionData
+                });
+
+            base.Given();
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheCurrentHoldings()
+        {
+            Verify<ITransactionRepository>(m => m.GetCurrentHoldings());
+        }
+    }
+
+    public class WhenICannotAccessTheDatabase : WhenIBuildTheViewModels
+    {
+        protected override void Given()
+        {
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetCurrentHoldings())
+                .Throws(new Exception());
+
+            GetMock<ITransactionFileWrapper>()
+                .Setup(m => m.GetCurrentHoldings())
+                .Returns(new List<TransactionData>
+                {
+                    TransactionData
+                });
+
+            base.Given();
+        }
+
+        [Then]
+        public void TheTransactionFileWrapperGetsTheCurrentHoldings()
+        {
+            Verify<ITransactionFileWrapper>(m => m.GetCurrentHoldings());
         }
     }
 }

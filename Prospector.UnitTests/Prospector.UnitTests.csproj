@@ -97,6 +97,7 @@
     <Compile Include="Domain\Providers\JsonProviderSpecs\JsonProviderTests.cs" />
     <Compile Include="Domain\Repositories\SettingRepositorySpecs\SettingRepositoryTests.cs" />
     <Compile Include="Domain\Repositories\TransactionRepositorySpecs\TransactionRepositoryTests.cs" />
+    <Compile Include="Domain\Wrappers\TransactionFileWrapperSpecs\TransactionFileWrapperTests.cs" />
     <Compile Include="GivenA.cs" />
     <Compile Include="Presentation\Extensions\HtmlDropDownExtensionsSpecs\HtmlDropDownExtensionsTests.cs" />
     <Compile Include="Presentation\Formatters\SplitStringFormatterSpecs\SplitStringFormatterTests.cs" />
@@ -131,6 +132,9 @@
       <Project>{0c7c2d85-d931-484c-ad47-641494b3d0d0}</Project>
       <Name>Prospector.Web</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

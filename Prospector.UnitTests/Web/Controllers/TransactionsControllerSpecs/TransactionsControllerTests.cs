@@ -7,6 +7,7 @@ using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Factories;
 using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Contracts.Repositories;
+using Prospector.Domain.Contracts.Wrappers;
 using Prospector.Domain.Entities;
 using Prospector.Domain.Enumerations;
 using Prospector.Presentation.ViewModels;
@@ -319,6 +320,7 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         };
 
         private readonly TransactionData _transactionData = new TransactionData();
+        private readonly IList<TransactionData> _mockHoldings = new List<TransactionData>(); 
 
         protected override void Given()
         {
@@ -327,6 +329,10 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             GetMock<IAutoMapper>()
                 .Setup(m => m.Map<TransactionViewModel, TransactionData>(_viewModel))
                 .Returns(_transactionData);
+
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetCurrentHoldings())
+                .Returns(_mockHoldings);
         }
 
         protected override void When()
@@ -346,6 +352,18 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         public void TheTransactionRepositoryAddsTheData()
         {
             Verify<ITransactionRepository>(m => m.AddTransaction(_transactionData));
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheCurrentHoldings()
+        {
+            Verify<ITransactionRepository>(m => m.GetCurrentHoldings());
+        }
+
+        [Then]
+        public void TheTransactionFileWrapperWritesTheCurrentHoldings()
+        {
+            Verify<ITransactionFileWrapper>(m => m.WriteCurrentHoldings(_mockHoldings));
         }
 
         [Then]
@@ -422,6 +440,7 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         };
 
         private readonly TransactionData _transactionData = new TransactionData();
+        private readonly IList<TransactionData> _mockHoldings = new List<TransactionData>();
 
         protected override void Given()
         {
@@ -430,6 +449,10 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             GetMock<IAutoMapper>()
                 .Setup(m => m.Map<TransactionViewModel, TransactionData>(_viewModel))
                 .Returns(_transactionData);
+
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetCurrentHoldings())
+                .Returns(_mockHoldings);
         }
 
         protected override void When()
@@ -449,6 +472,18 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         public void TheTransactionRepositoryAddsTheData()
         {
             Verify<ITransactionRepository>(m => m.AddTransaction(_transactionData));
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheCurrentHoldings()
+        {
+            Verify<ITransactionRepository>(m => m.GetCurrentHoldings());
+        }
+
+        [Then]
+        public void TheTransactionFileWrapperWritesTheCurrentHoldings()
+        {
+            Verify<ITransactionFileWrapper>(m => m.WriteCurrentHoldings(_mockHoldings));
         }
 
         [Then]

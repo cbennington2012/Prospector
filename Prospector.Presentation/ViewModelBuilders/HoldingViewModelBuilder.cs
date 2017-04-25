@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Engines;
 using Prospector.Domain.Contracts.Repositories;
+using Prospector.Domain.Contracts.Wrappers;
 using Prospector.Domain.Entities;
 using Prospector.Presentation.Contracts;
 using Prospector.Presentation.ViewModels;
@@ -14,12 +15,14 @@ namespace Prospector.Presentation.ViewModelBuilders
         private readonly IAutoMapper _autoMapper;
         private readonly ICalculatorEngine _calculatorEngine;
         private readonly ITransactionRepository _transactionRepository;
+        private readonly ITransactionFileWrapper _transactionFileWrapper;
 
-        public HoldingViewModelBuilder(IAutoMapper autoMapper, ICalculatorEngine calculatorEngine, ITransactionRepository transactionRepository)
+        public HoldingViewModelBuilder(IAutoMapper autoMapper, ICalculatorEngine calculatorEngine, ITransactionRepository transactionRepository, ITransactionFileWrapper transactionFileWrapper)
         {
             _autoMapper = autoMapper;
             _calculatorEngine = calculatorEngine;
             _transactionRepository = transactionRepository;
+            _transactionFileWrapper = transactionFileWrapper;
         }
 
         public HoldingViewModel BuildViewModel(HoldingData data)
@@ -40,7 +43,17 @@ namespace Prospector.Presentation.ViewModelBuilders
 
         public IList<HoldingViewModel> BuildViewModels()
         {
-            var data = _transactionRepository.GetCurrentHoldings();
+            IList<TransactionData> data;
+
+            try
+            {
+                data = _transactionRepository.GetCurrentHoldings();
+            }
+            catch
+            {
+                // Get from latest Json file
+                data = _transactionFileWrapper.GetCurrentHoldings();
+            }
 
             var viewModels = new List<HoldingViewModel>();
 

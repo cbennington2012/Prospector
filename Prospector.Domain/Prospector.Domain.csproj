@@ -64,6 +64,7 @@
     <Compile Include="Contracts\Repositories\ITransactionRepository.cs" />
     <Compile Include="Contracts\Wrappers\IIoWrapper.cs" />
     <Compile Include="Contracts\Wrappers\IStructureMapWrapper.cs" />
+    <Compile Include="Contracts\Wrappers\ITransactionFileWrapper.cs" />
     <Compile Include="Engines\CalculatorEngine.cs" />
     <Compile Include="Entities\HoldingData.cs" />
     <Compile Include="Entities\SettingData.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Repositories\TransactionRepository.cs" />
     <Compile Include="Factories\TransactionFactory.cs" />
+    <Compile Include="Wrappers\TransactionFileWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

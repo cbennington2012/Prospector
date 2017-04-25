@@ -5,6 +5,7 @@ using Prospector.Domain.Contracts.AutoMapping;
 using Prospector.Domain.Contracts.Factories;
 using Prospector.Domain.Contracts.Providers;
 using Prospector.Domain.Contracts.Repositories;
+using Prospector.Domain.Contracts.Wrappers;
 using Prospector.Domain.Entities;
 using Prospector.Domain.Enumerations;
 using Prospector.Domain.Parsers;
@@ -19,14 +20,17 @@ namespace Prospector.Web.Controllers
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ITransactionFactory _transactionFactory;
         private readonly ISettingRepository _settingRepository;
+        private readonly ITransactionFileWrapper _transactionFileWrapper;
 
-        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, ITransactionFactory transactionFactory, ISettingRepository settingRepository)
+        public TransactionsController(ITransactionRepository transactionRepository, IAutoMapper autoMapper, IDateTimeProvider dateTimeProvider, ITransactionFactory transactionFactory, ISettingRepository settingRepository, 
+            ITransactionFileWrapper transactionFileWrapper)
         {
             _transactionRepository = transactionRepository;
             _autoMapper = autoMapper;
             _dateTimeProvider = dateTimeProvider;
             _transactionFactory = transactionFactory;
             _settingRepository = settingRepository;
+            _transactionFileWrapper = transactionFileWrapper;
         }
 
         [HttpGet]
@@ -103,6 +107,7 @@ namespace Prospector.Web.Controllers
             var data = _autoMapper.Map<TransactionViewModel, TransactionData>(viewModel);
 
             _transactionRepository.AddTransaction(data);
+            _transactionFileWrapper.WriteCurrentHoldings(_transactionRepository.GetCurrentHoldings());
 
             var viewResult = new ViewResult
             {
@@ -134,6 +139,7 @@ namespace Prospector.Web.Controllers
             data.Percentage = 0;
 
             _transactionRepository.AddTransaction(data);
+            _transactionFileWrapper.WriteCurrentHoldings(_transactionRepository.GetCurrentHoldings());
 
             var viewResult = new ViewResult
             {
