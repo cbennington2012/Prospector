@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prospector.DbUpdater", "Pro
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{FDB81E79-BC76-48AB-8D92-A04683AF562E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prospector.App", "Prospector.App\Prospector.App.csproj", "{99E9594C-1C73-4695-9902-66DDCE6987C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{49FCE6B9-2585-4D61-AB8A-D1643C39036C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49FCE6B9-2585-4D61-AB8A-D1643C39036C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49FCE6B9-2585-4D61-AB8A-D1643C39036C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99E9594C-1C73-4695-9902-66DDCE6987C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99E9594C-1C73-4695-9902-66DDCE6987C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99E9594C-1C73-4695-9902-66DDCE6987C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99E9594C-1C73-4695-9902-66DDCE6987C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
