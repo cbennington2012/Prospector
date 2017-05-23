@@ -33,7 +33,7 @@ namespace Prospector.App
         private void CalculatorButton_OnClick(object sender, RoutedEventArgs e)
         {
             ContentPanel.Children.Clear();
-            ContentPanel.Children.Add(new CalculatorControl());
+            ContentPanel.Children.Add(_container.GetInstance<CalculatorControl>());
         }
 
         private void HoldingsButton_OnClick(Object sender, RoutedEventArgs e)

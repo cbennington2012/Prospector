@@ -7,28 +7,65 @@
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=System"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              x:Name="uc">
-    <StackPanel Orientation="Vertical" >
+    <StackPanel Orientation="Vertical" Width="725">
         <Label Style="{StaticResource Heading1}">Calculator</Label>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
                 <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" ></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="0">Investment:</Label>
             <Border Grid.Column="1" Grid.Row="0" Padding="2">
                 <TextBox Name="InvestmentTextBox" Style="{StaticResource FormTextBox}"></TextBox>
             </Border>
-            
-            
             <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="1">Price:</Label>
             <Border Grid.Column="1" Grid.Row="1" Padding="2">
-                <TextBox Name="PriceTextBox"></TextBox>
+                <TextBox Name="PriceTextBox" Style="{StaticResource FormTextBox}"></TextBox>
             </Border>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="2">Tax:</Label>
+            <Border Grid.Column="1" Grid.Row="2" Padding="2">
+                <TextBox Name="TaxTextBox" Style="{StaticResource FormTextBox}"></TextBox>
+            </Border>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="3">Commission:</Label>
+            <Border Grid.Column="1" Grid.Row="3" Padding="2">
+                <TextBox Name="CommissionTextBox" Style="{StaticResource FormTextBox}">5.95</TextBox>
+            </Border>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="4">Levy:</Label>
+            <Border Grid.Column="1" Grid.Row="4" Padding="2">
+                <TextBox Name="LevyTextBox" Style="{StaticResource FormTextBox}">0</TextBox>
+            </Border>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="5">Profit:</Label>
+            <Border Grid.Column="1" Grid.Row="5" Padding="2">
+                <TextBox Name="ProfitTextBox" Style="{StaticResource FormTextBox}">2</TextBox>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="6" Padding="2">
+                <Button Style="{StaticResource PrimaryButton}" Click="CalculateButton_OnClick" >Calculate</Button>
+            </Border>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="7">Cost:</Label>
+            <Label Name="CostLabel" Grid.Column="1" Grid.Row="7"></Label>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="8">Shares:</Label>
+            <Label Name="SharesLabel" Grid.Column="1" Grid.Row="8"></Label>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="9">Break Even Price:</Label>
+            <Label Grid.Column="1" Grid.Row="9" Name="BreakEvenPriceLabel"></Label>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="10">Profit Price:</Label>
+            <Label Name="ProfitPriceLabel" Grid.Column="1" Grid.Row="10"></Label>
+            <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="11">Earnings:</Label>
+            <Label Name="EarningsLabel" Grid.Column="1" Grid.Row="11"></Label>
         </Grid>
     </StackPanel>
 </UserControl>

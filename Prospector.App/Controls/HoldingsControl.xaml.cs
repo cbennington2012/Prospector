@@ -16,7 +16,7 @@ namespace Prospector.App.Controls
             PopulateTable();
         }
 
-        internal void PopulateTable()
+        private void PopulateTable()
         {
             var holdingViewModels = _holdingViewModelBuilder.BuildViewModels();
 
