@@ -25,7 +25,7 @@ namespace Prospector.Presentation.ViewModels
         public DateTime Time { get; set; }
 
         [Required(ErrorMessage = "Please enter the amount of shares")]
-        [Range(1, 100000, ErrorMessage = "Value cannot be zero")]
+        [Range(1, 1000000, ErrorMessage = "Value cannot be zero")]
         public int Shares { get; set; }
 
         [Required(ErrorMessage = "Please enter a Price", AllowEmptyStrings = false)]
