@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Prospector.Domain.Contracts.Engines;
+using Prospector.Domain.Contracts.Repositories;
 using Prospector.Domain.Entities;
 using Prospector.Domain.Enumerations;
 using Prospector.Domain.Factories;
@@ -44,9 +45,36 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
             Levy = 0
         };
 
+        private readonly TransactionData _mockBuyOutsidePeriodTransaction = new TransactionData
+        {
+            TransactionType = TransactionType.Buy,
+            Id = "abc",
+            Shares = 100,
+            Price = 50,
+            Commission = 8.95M,
+            Tax = 10,
+            Levy = 0
+        };
+
+        private readonly TransactionData _mockSellOutsidePeriodTransaction = new TransactionData
+        {
+            TransactionType = TransactionType.Sell,
+            Id = "xyz",
+            Shares = 100,
+            Price = 75,
+            Commission = 5.95M,
+            Tax = 10,
+            Levy = 0,
+            SellTransactionId = "abc"
+        };
+
         protected override void Given()
         {
             base.Given();
+
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetTransactionById("abc"))
+                .Returns(_mockBuyOutsidePeriodTransaction);
 
             GetMock<ICalculatorEngine>()
                 .Setup(m => m.CalculateCost(100, 50, 8.95M, 10, 0))
@@ -65,8 +93,15 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
             {
                 _mockBuyTransaction,
                 _mockSellTransaction,
-                _mockOpenTransaction
+                _mockOpenTransaction,
+                _mockSellOutsidePeriodTransaction
             });
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheMissingBuyTransaction()
+        {
+            Verify<ITransactionRepository>(m => m.GetTransactionById("abc"));
         }
 
         [Then]
@@ -84,7 +119,7 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
         [Then]
         public void TheResultIsCorrect()
         {
-            Assert.That(Result, Is.EqualTo(75));
+            Assert.That(Result, Is.EqualTo(150));
         }
     }
 }

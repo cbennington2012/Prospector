@@ -57,7 +57,7 @@ namespace Prospector.Web.Controllers
                 CumulativeTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue) * numberOfMonths,
                 TaxFreeAllowance = Decimal.Parse(_settingRepository.GetSettingByKey("TaxFreeAllowance").SettingsValue),
                 TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data),
-                SinceStartTaxYear = _transactionFactory.GetTaxYearValue(taxYearData),
+                SinceStartTaxYear = _transactionFactory.GetTransactionPeriodValue(taxYearData),
                 ShowBuyTransactionsOnly = true
             };
 
@@ -82,13 +82,16 @@ namespace Prospector.Web.Controllers
                 }
             }
 
+            var taxYearStartDate = _dateTimeProvider.GetTaxYearStartDate(viewModel.StartDate);
+            var taxYearData = _transactionRepository.GetTransactions(taxYearStartDate, viewModel.EndDate);
+
             var monthlyTargetSetting = _settingRepository.GetSettingByKey("DefaultMonthlyTarget");
 
             viewModel.Results = results;
             viewModel.MonthlyTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue);
             viewModel.CumulativeTarget = Decimal.Parse(monthlyTargetSetting.SettingsValue) *numberOfMonths;
             viewModel.TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data);
-            viewModel.SinceStartTaxYear = 0;
+            viewModel.SinceStartTaxYear = _transactionFactory.GetTransactionPeriodValue(taxYearData);
 
             return View(viewModel);
         }

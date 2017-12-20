@@ -20,7 +20,10 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         private readonly DateTime _startDate = DateTime.UtcNow.AddDays(-1);
         private readonly DateTime _endDate = DateTime.UtcNow;
 
+        private readonly DateTime _taxYearStartDate = DateTime.UtcNow.AddDays(-5);
+
         private readonly TransactionData _transactionData = new TransactionData();
+        private readonly IList<TransactionData> _taxYearTransactions = new List<TransactionData>();
         private readonly TransactionViewModel _transactionViewModel = new TransactionViewModel();
 
         private readonly SettingData _monthlyTargetSettingData = new SettingData
@@ -55,10 +58,18 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
                 {
                     _transactionData
                 });
-
+            
             GetMock<IAutoMapper>()
                 .Setup(m => m.Map<TransactionData, TransactionViewModel>(_transactionData))
                 .Returns(_transactionViewModel);
+
+            GetMock<IDateTimeProvider>()
+                .Setup(m => m.GetTaxYearStartDate(_startDate))
+                .Returns(_taxYearStartDate);
+
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetTransactions(_taxYearStartDate, _endDate))
+                .Returns(_taxYearTransactions);
 
             GetMock<ISettingRepository>()
                 .Setup(m => m.GetSettingByKey("DefaultMonthlyTarget"))
@@ -107,6 +118,18 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         }
 
         [Then]
+        public void TheDateTimeProviderGetsTheTaxYearStartDate()
+        {
+            Verify<IDateTimeProvider>(m => m.GetTaxYearStartDate(_startDate));
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheTaxYearTransactions()
+        {
+            Verify<ITransactionRepository>(m => m.GetTransactions(_taxYearStartDate, _endDate));
+        }
+
+        [Then]
         public void TheSettingRepositoryGetsTheMonthlyTargetValue()
         {
             Verify<ISettingRepository>(m => m.GetSettingByKey("DefaultMonthlyTarget"));
@@ -122,6 +145,12 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         public void TheTransactionFactoryGetsTheTransactionPeriodValue()
         {
             Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(It.Is<IList<TransactionData>>(x => x.Contains(_transactionData))));
+        }
+
+        [Then]
+        public void TheTransactionFactoryGetsTheTaxYearValue()
+        {
+            Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(_taxYearTransactions));
         }
 
         [Then]
@@ -165,9 +194,11 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
     {
         private readonly DateTime _startDate = DateTime.UtcNow.AddDays(-1);
         private readonly DateTime _endDate = DateTime.UtcNow;
+        private readonly DateTime _taxYearStartDate = DateTime.UtcNow.AddDays(-2);
         private readonly TransactionData _buyTransactionData = new TransactionData();
         private readonly TransactionData _sellTransactionData = new TransactionData();
         private readonly TransactionData _buyTransactionData2 = new TransactionData();
+        private readonly IList<TransactionData> _taxYearTransactions = new List<TransactionData>();
 
         private readonly SettingData _monthlyTargetSettingData = new SettingData
         {
@@ -235,6 +266,14 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
             GetMock<IDateTimeProvider>()
                 .Setup(m => m.GetTotalNumberOfMonths(_startDate, _endDate))
                 .Returns(2);
+
+            GetMock<IDateTimeProvider>()
+                .Setup(m => m.GetTaxYearStartDate(_startDate))
+                .Returns(_taxYearStartDate);
+
+            GetMock<ITransactionRepository>()
+                .Setup(m => m.GetTransactions(_taxYearStartDate, _endDate))
+                .Returns(_taxYearTransactions);
         }
 
         protected override void When()
@@ -269,9 +308,27 @@ namespace Prospector.UnitTests.Web.Controllers.TransactionsControllerSpecs
         }
 
         [Then]
+        public void TheDateTimeProviderGetsTheTaxYearStartDate()
+        {
+            Verify<IDateTimeProvider>(m => m.GetTaxYearStartDate(_startDate));
+        }
+
+        [Then]
+        public void TheTransactionRepositoryGetsTheTaxYearTransactions()
+        {
+            Verify<ITransactionRepository>(m => m.GetTransactions(_taxYearStartDate, _endDate));
+        }
+
+        [Then]
         public void TheTransactionFactoryGetsTheTransactionPeriodValue()
         {
             Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(It.Is<IList<TransactionData>>(x => x.Contains(_buyTransactionData))));
+        }
+
+        [Then]
+        public void TheTransactionFactoryGetsTheTaxYearPeriodValue()
+        {
+            Verify<ITransactionFactory>(m => m.GetTransactionPeriodValue(_taxYearTransactions));
         }
 
         [Then]

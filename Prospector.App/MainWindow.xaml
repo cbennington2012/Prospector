@@ -1,0 +1,29 @@
+﻿<Window x:Class="Prospector.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prospector.App"
+        xmlns:userControls="clr-namespace:Prospector.App.Controls"
+        mc:Ignorable="d"
+        Title="Prospector" MinHeight="600" MinWidth="1024" Height="600" Width="1024">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <Label Style="{StaticResource Heading1}">Prospector</Label>
+            <Border Padding="5 0 0 0" Style="{StaticResource NavBar}">
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource NavButton}" Click="CalculatorButton_OnClick">Calculator</Button>
+                    <Label Style="{StaticResource Seperator}">-</Label>
+                    <Button Style="{StaticResource NavButton}" Click="HoldingsButton_OnClick">Holdings</Button>
+                    <Label Style="{StaticResource Seperator}">-</Label>
+                    <Button Style="{StaticResource NavButton}" Click="DashboardButton_OnClick">Dashboard</Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Name="ContentPanel">
+            <Border Padding="10">
+                <userControls:HomeControl></userControls:HomeControl>
+            </Border>
+        </StackPanel>
+    </DockPanel>
+</Window>

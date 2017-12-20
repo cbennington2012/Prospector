@@ -43,6 +43,8 @@
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="StructureMap, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.automocking.moq.4.0.0.315\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -78,12 +80,14 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Engines\CalculatorEngineSpecs\CalculatorEngineTests.cs" />
@@ -120,6 +124,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Prospector.App\Prospector.App.csproj">
+      <Project>{99E9594C-1C73-4695-9902-66DDCE6987C0}</Project>
+      <Name>Prospector.App</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Prospector.Domain\Prospector.Domain.csproj">
       <Project>{D1D23BF4-CF98-4A6C-BA08-9349CB65B9E3}</Project>
       <Name>Prospector.Domain</Name>

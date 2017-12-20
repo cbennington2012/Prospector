@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Prospector.App.Controls.HomeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Prospector.App.Controls"
+             mc:Ignorable="d" >
+    <StackPanel Orientation="Vertical" Style="{StaticResource HeroBox}">
+        <Label Style="{StaticResource HeroHeading}">Hello!</Label>
+        <Label>Welcome to Prospector. Use the menu at the top to get started.</Label>
+    </StackPanel>
+</UserControl>
