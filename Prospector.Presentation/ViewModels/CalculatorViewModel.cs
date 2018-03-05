@@ -25,7 +25,7 @@ namespace Prospector.Presentation.ViewModels
         public Decimal Tax { get; set; }
 
         [Required(ErrorMessage = "Please enter the Commission", AllowEmptyStrings = false)]
-        [Range(5.95, 11.95, ErrorMessage = "Value cannot be zero")]
+        [Range(0, 50.00, ErrorMessage = "Value cannot be zero")]
         [DataType(DataType.Currency)]
         [DisplayName("Commission (£)")]
         public Decimal Commission { get; set; }

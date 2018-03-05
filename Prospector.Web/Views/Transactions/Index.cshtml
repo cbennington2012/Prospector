@@ -80,6 +80,10 @@
                                             @Html.ActionLink("Sell", "Sell", "Transactions", new { Id = item.Id }, new { Target = "_blank" })
                                         }
                                     }
+                                    if (item.TransactionType == TransactionType.Dividend)
+                                    {
+                                        <span>&nbsp;</span>
+                                    }
                                     else
                                     {
                                         <span>Sold</span>

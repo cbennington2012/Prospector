@@ -1,0 +1,118 @@
+﻿@model Prospector.Presentation.ViewModels.DashboardViewModel[]
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Dashboard</h3>
+<div class="notification">
+    <p>
+        <strong>NOTE:</strong> Current price is delayed by up to 15 minutes. Prices are a rough indicator of bid prices.
+    </p>
+</div>
+<div class="section">
+    @foreach (var item in Model.OrderByDescending(m => m.PercentageDifference))
+    {
+        <div class="dashboardEntry">
+            <div class="dashboardEntryLarge">
+                @item.Code
+            </div>
+            <div class="dashboardEntryStack">
+                <div class="dashboardEntryName">
+                    <h2>@item.Name</h2>
+                </div>
+                <div>
+                    <p>
+                        <strong>Break Even Price:</strong>
+                        @String.Format("{0}", item.BreakEvenPrice == 0 ? "-" : item.BreakEvenPrice.ToString())
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        <strong>Profit Price:</strong>
+                        @String.Format("{0}", item.ProfitPrice == 0 ? "-" : item.ProfitPrice.ToString())
+                    </p>
+                </div>
+            </div>
+
+            @{
+                if (item.CurrentPrice < item.BreakEvenPrice)
+                {
+                    <div class="dashboardEntryLarge">
+                        <span class="redStatus">@item.CurrentPrice</span>
+                    </div>
+                    <div class="dashboardEntryStack">
+                        <div>
+                            <p>&nbsp;</p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="redStatus">
+                                    <strong>@item.PercentageDifference.ToString("p2")</strong>
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="redStatus">
+                                    <strong>£ @(item.Earnings == 0 ? "-" : item.Earnings.ToString("C2"))</strong>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                }
+                else if (item.CurrentPrice > item.BreakEvenPrice && item.CurrentPrice < item.ProfitPrice)
+                {
+                    <div class="dashboardEntryLarge">
+                        <span class="blueStatus">@item.CurrentPrice</span>
+                    </div>
+                    <div class="dashboardEntryStack">
+                        <div>
+                            <p>&nbsp;</p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="blueStatus">
+                                    <strong>@item.PercentageDifference.ToString("p2")</strong>
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="blueStatus">
+                                    <strong>£ @(item.Earnings == 0 ? "-" : item.Earnings.ToString("C2"))</strong>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="dashboardEntryLarge">
+                        <span class="greenStatus">@item.CurrentPrice</span>
+                    </div>
+                    <div class="dashboardEntryStack">
+                        <div>
+                            <p>&nbsp;</p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="greenStatus">
+                                    <strong>@item.PercentageDifference.ToString("p2")</strong>
+                                </span>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span class="greenStatus">
+                                    <strong>£ @(item.Earnings == 0 ? "-" : item.Earnings.ToString("C2"))</strong>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

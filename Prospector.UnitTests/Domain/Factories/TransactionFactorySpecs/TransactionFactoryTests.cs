@@ -68,6 +68,17 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
             SellTransactionId = "abc"
         };
 
+        private readonly TransactionData _mockDividendTransaction = new TransactionData
+        {
+            TransactionType = TransactionType.Dividend,
+            Id = "DIV01",
+            Shares = 100,
+            Price = 1,
+            Commission = 0,
+            Tax = 0,
+            Levy = 0
+        };
+
         protected override void Given()
         {
             base.Given();
@@ -83,6 +94,10 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
             GetMock<ICalculatorEngine>()
                 .Setup(m => m.CalculateCost(100, 75, 5.95M, 10, 0))
                 .Returns(175);
+
+            GetMock<ICalculatorEngine>()
+                .Setup(m => m.CalculateEarnings(100, 1, 0, 0, 0))
+                .Returns(100);
         }
 
         protected override void When()
@@ -94,7 +109,8 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
                 _mockBuyTransaction,
                 _mockSellTransaction,
                 _mockOpenTransaction,
-                _mockSellOutsidePeriodTransaction
+                _mockSellOutsidePeriodTransaction,
+                _mockDividendTransaction
             });
         }
 
@@ -117,9 +133,15 @@ namespace Prospector.UnitTests.Domain.Factories.TransactionFactorySpecs
         }
 
         [Then]
+        public void TheCalculatorEngineGetsTheDividendEarnings()
+        {
+            Verify<ICalculatorEngine>(m => m.CalculateEarnings(100, 1, 0, 0, 0));
+        }
+
+        [Then]
         public void TheResultIsCorrect()
         {
-            Assert.That(Result, Is.EqualTo(150));
+            Assert.That(Result, Is.EqualTo(250));
         }
     }
 }

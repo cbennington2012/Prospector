@@ -58,7 +58,7 @@ namespace Prospector.Web.Controllers
                 TaxFreeAllowance = Decimal.Parse(_settingRepository.GetSettingByKey("TaxFreeAllowance").SettingsValue),
                 TransactionPeriod = _transactionFactory.GetTransactionPeriodValue(data),
                 SinceStartTaxYear = _transactionFactory.GetTransactionPeriodValue(taxYearData),
-                ShowBuyTransactionsOnly = true
+                ShowBuyTransactionsOnly = false
             };
 
             return View(viewModel);

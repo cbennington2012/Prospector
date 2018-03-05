@@ -43,7 +43,7 @@
             </Border>
             <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="3">Commission:</Label>
             <Border Grid.Column="1" Grid.Row="3" Padding="2">
-                <TextBox Name="CommissionTextBox" Style="{StaticResource FormTextBox}">5.95</TextBox>
+                <TextBox Name="CommissionTextBox" Style="{StaticResource FormTextBox}">6.00</TextBox>
             </Border>
             <Label Style="{StaticResource GridLabel}" Grid.Column="0" Grid.Row="4">Levy:</Label>
             <Border Grid.Column="1" Grid.Row="4" Padding="2">

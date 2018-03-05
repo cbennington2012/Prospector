@@ -230,3 +230,41 @@
 .red {
     background-color: #E6B8B7;
 }
+
+.dashboardEntry {
+    width: 100%;
+    border: solid 1px #257898;
+    margin-bottom: 5px;
+    display: inline-table;
+    padding: 5px;
+}
+
+.dashboardEntryLarge {
+    font-size: 3.5em;
+    font-weight: bold;
+    float: left;
+    min-width: 225px;
+    text-align: center;
+    line-height: 130px;
+}
+
+.dashboardEntryStack {
+    float: left;
+    font-size: 1.2em;
+}
+
+.dashboardEntryName {
+    width: 600px;
+}
+
+.redStatus {
+    color: red;
+}
+
+.blueStatus {
+    color: #257898;
+}
+
+.greenStatus {
+    color: #008000;
+}

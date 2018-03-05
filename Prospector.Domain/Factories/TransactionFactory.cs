@@ -22,11 +22,16 @@ namespace Prospector.Domain.Factories
 
         public Decimal GetTransactionPeriodValue(IList<TransactionData> data)
         {
-            return (from item in data.Where(x => x.TransactionType == TransactionType.Sell)
+            var result = (from item in data.Where(x => x.TransactionType == TransactionType.Sell)
                     let buyTransaction = (TransactionData)(data.FirstOrDefault(x => x.Id == item.SellTransactionId) ?? _transactionRepository.GetTransactionById(item.SellTransactionId))
                     let buyCost = _calculatorEngine.CalculateCost(buyTransaction.Shares, buyTransaction.Price, buyTransaction.Commission, buyTransaction.Tax, buyTransaction.Levy)
                     let sellCost = _calculatorEngine.CalculateCost(item.Shares, item.Price, item.Commission, item.Tax, item.Levy)
                     select sellCost - buyCost).Sum();
+
+            result += (from item in data.Where(x => x.TransactionType == TransactionType.Dividend)
+                select _calculatorEngine.CalculateEarnings(item.Shares, item.Price, 0, 0, 0)).Sum();
+
+            return result;
         }
     }
 }

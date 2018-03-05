@@ -80,16 +80,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapping\CalculatorTransactionViewModelMap.cs" />
+    <Compile Include="AutoMapping\DashboardViewModelMap.cs" />
     <Compile Include="AutoMapping\HoldingViewModelMap.cs" />
     <Compile Include="AutoMapping\SettingViewModelMap.cs" />
     <Compile Include="AutoMapping\TransactionViewModelMap.cs" />
+    <Compile Include="Contracts\IDashboardViewModelBuilder.cs" />
     <Compile Include="Contracts\IHoldingViewModelBuilder.cs" />
     <Compile Include="Extensions\HtmlDropDownExtensions.cs" />
     <Compile Include="Formatters\SplitStringFormatter.cs" />
     <Compile Include="IoC\PresentationRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelBuilders\DashboardViewModelBuilder.cs" />
     <Compile Include="ViewModelBuilders\HoldingViewModelBuilder.cs" />
     <Compile Include="ViewModels\CalculatorViewModel.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\HoldingViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\TransactionSearchViewModel.cs" />
